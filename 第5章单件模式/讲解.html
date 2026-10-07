@@ -1,0 +1,311 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="先确认是否必须唯一，再分别处理实例创建与业务操作的并发。"><title>第5章单件模式 · Python 实践讲解</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><div class="progress" aria-hidden="true"></div><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>01 — 05 · PYTHON 实践版 · 离线可读</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章学习路径</p><nav class="chapter-list" aria-label="章节切换"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html" ><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" class="active" aria-current="page"><span>05</span>单件模式</a></nav><hr><p class="nav-label">本章目录</p><nav class="toc" aria-label="本章目录"><a href="#s1">1. 先记住这一句话</a><a href="#s2">2. 全局变量、单例、只创建一次，有什么区别</a><a href="#s3">3. 书中多线程失败的原因：检查和创建是两个动作</a><a href="#s4">4. 把书中的 Java 方案翻译成 Python 决策</a><a href="#s5">5. 完整 Python 示例：同一实例，安全累计批次数</a><a href="#s6">6. 最容易漏掉的一点：实例安全，不等于状态安全</a><a href="#s7">7. 实际项目里，先决定是否真的需要它</a><a href="#s8">8. 三分钟练习：识别两个不同的 bug</a><a href="#s9">9. 五章串起来：看到需求，先认变化点</a><a href="#s10">10. 一分钟复习与原书定位</a></nav><p class="side-note">先理解变化点，再决定模式。<br>所有示例仅使用 Python 标准库。<br>Ctrl + P 可打印含答案的完整讲解。</p></aside><main class="main" id="main"><div class="hero"><p class="eyebrow">CHAPTER 05 / 控制数量</p><span class="hero-number" aria-hidden="true">05</span><h1>只有一份实例，<br>也要管好共享状态</h1><p class="intro">先确认是否必须唯一，再分别处理实例创建与业务操作的并发。</p><div class="meta"><span class="tag">单件模式</span><span class="tag">建议 20 分钟</span><span class="tag">Python 3.10+</span></div></div><div class="actions"><a href="练习题.html">章节测验 · 10 题 →</a><a href="%E8%AE%B2%E8%A7%A3%E7%A8%BF.md">Markdown 讲解稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py" download>下载 Python 示例 ↓</a><a href="%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F.pdf">对照原书 PDF ↗</a></div><div class="concepts"><div><b>01</b>唯一的范围</div><div><b>02</b>创建过程同步</div><div><b>03</b>共享状态同步</div></div><figure class="diagram" aria-label="多个调用者到受控创建入口到同一个实例"><div class="diagram-flow"><div class="diagram-node">多个调用者</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">受控创建入口</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">同一个实例</div></div><p>实例创建安全，不代表实例上的所有业务操作都线程安全。</p></figure><section class="lab" aria-label="交互演示"><div class="lab-head"><b>动手看变化</b><span>浏览器演示 · Python 源码见下文</span></div><div class="lab-body"><p class="lab-desc">逐步看两个线程的创建顺序。这是确定性的时序说明，不是浏览器运行 Python 线程。</p><div class="controls"><label>方案 <select id="locking"><option value="unsafe">未同步的懒初始化</option><option value="safe">完整加锁的创建入口</option></select></label><button id="step">下一步</button><button id="reset">重置</button></div><div class="result" id="result" aria-live="polite">初始状态：实例为空。点击“下一步”。</div></div></section><article><blockquote>
+<p>学习目标：分清“一个访问入口”“一个实例”“线程安全”三个概念；会写受控的 Python 单例，也知道什么时候只创建一个普通对象更合适。</p>
+</blockquote>
+<p>建议用时：速读 10 分钟，运行与练习 10 分钟。重点阅读第 3、5、6 节，不要只背双重检查锁。</p>
+<h2 id="s1">1. 先记住这一句话</h2>
+<p><strong>单件模式，也常叫单例模式：控制某个类的实例数量，并提供获取该实例的统一入口。</strong></p>
+<p>书中的巧克力锅炉只有一个物理设备。如果创建两个控制器，各自维护一份“是否空锅”的状态，就可能出现一个已经加料、另一个还认为可以继续加料的问题。</p>
+<p>模式的动机是保持资源管理与状态的一致性，不是因为“全局访问很方便”。线程池、配置服务可能适合共享，但“适合共享”不自动等于“必须禁止创建第二个实例”。</p>
+<h2 id="s2">2. 全局变量、单例、只创建一次，有什么区别</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>形式</th>
+<th>能方便共享吗</th>
+<th>能否阻止其他地方再构造一个对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模块里保存 <code>service = Service()</code></td>
+<td>能</td>
+<td>不能，仍可调用 Service()</td>
+</tr>
+<tr>
+<td>程序入口只创建一次，再传给使用者</td>
+<td>能，依赖显式可见</td>
+<td>靠组装约定，不强制禁止</td>
+</tr>
+<tr>
+<td>类控制正常构造路径，重复构造返回同一对象</td>
+<td>能</td>
+<td>在约定的使用范围内能</td>
+</tr>
+</tbody></table></div>
+<p>Python 模块的顶层代码通常在首次导入时执行，之后同一进程中以同一模块名导入会复用缓存。因此模块级共享对象往往已经够用，但它不等于严格的“类只有一个实例”。</p>
+<p>模块被重新加载、用不同模块名重复加载，或者程序启动多个进程时，都不能照搬“永远只有一份”的结论。</p>
+<h2 id="s3">3. 书中多线程失败的原因：检查和创建是两个动作</h2>
+<p>不安全的懒初始化逻辑大致是：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 3 行</span><button data-copy="code-1" aria-label="复制text代码">复制</button></div><pre><code id="code-1" class="language-text">如果 instance 为空：
+    instance = 创建对象
+返回 instance
+</code></pre></div>
+<p>一次可能的交错：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>线程 A</th>
+<th>线程 B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>检查：为空</td>
+<td>等待</td>
+</tr>
+<tr>
+<td>2</td>
+<td>暂停</td>
+<td>检查：也为空</td>
+</tr>
+<tr>
+<td>3</td>
+<td>创建对象 A，取得它</td>
+<td>暂停</td>
+</tr>
+<tr>
+<td>4</td>
+<td>已持有对象 A</td>
+<td>创建对象 B，取得它</td>
+</tr>
+</tbody></table></div>
+<p>两个线程可能各拿一份控制器。把变量声明为全局，或者用一个 <code>if</code> 包起来，都不能自动让“检查—创建—赋值”成为不可分割的操作。</p>
+<p>Python 也不要靠 GIL 推导这段复合操作一定安全。共享状态应使用明确的同步机制；一次测试没碰到竞争，不等于证明没有竞争。</p>
+<h2 id="s4">4. 把书中的 Java 方案翻译成 Python 决策</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>关键点</th>
+<th>学习与使用建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同步获取入口</td>
+<td>检查与创建都在同一把锁内</td>
+<td>简单清楚，本章 Python 示例采用这一方案</td>
+</tr>
+<tr>
+<td>急切创建</td>
+<td>Java 在类初始化时创建静态实例</td>
+<td>Python 可在程序启动或模块首次执行时创建共享对象；两种语言机制不完全相同</td>
+</tr>
+<tr>
+<td>双重检查加锁 DCL</td>
+<td>锁外查一次，锁内再查一次</td>
+<td>Java 正确版本需要 volatile 等内存模型保证；不要机械搬到 Python</td>
+</tr>
+<tr>
+<td>Java 枚举单例</td>
+<td>利用 Java 枚举的实例及序列化规则</td>
+<td>这是 Java 的语言方案，不等于 Python Enum 可直接代替所有共享服务</td>
+</tr>
+<tr>
+<td>模块级对象 / 显式传入</td>
+<td>利用正常对象与程序组装</td>
+<td>Python 项目常见且更容易测试；先检查是否已经满足需求</td>
+</tr>
+</tbody></table></div>
+<p>Java 双重检查锁的第二次检查，是防止等待锁期间其他线程已经创建好对象；<code>volatile</code> 用来保证相关的可见性与安全发布，不能因为“我已经加了锁”就删除。已初始化后的访问通常走锁外路径；竞争初始化时，多个线程仍可能先后进入锁内。</p>
+<p>Python 的标准 <code>threading.Lock</code> 没有一个可以直接照搬 Java <code>volatile</code> 的关键词。没有测量到瓶颈时，完整加锁比自行设计锁外快速路径更容易判断正确性。</p>
+<p>书中用较大的倍数形容同步开销，不能当作你当前系统的性能结论。是否需要优化，应依据实际运行环境与测量。</p>
+<h2 id="s5">5. 完整 Python 示例：同一实例，安全累计批次数</h2>
+<p>同目录 <a href="%E7%A4%BA%E4%BE%8B.py">示例.py</a>，运行 <code>python 示例.py</code>，要求 Python 3.10+。</p>
+<p>示例把锅炉管理中的“累计完成批次”抽出来，专门展示两把锁的不同职责。它不连接设备，也不模拟真实生产安全控制。</p>
+<details class="code-details"><summary>展开完整 Python 示例 · 55 行 · 可复制运行</summary><div class="code-block"><div class="code-top"><span>PYTHON · 55 行</span><button data-copy="code-2" aria-label="复制python代码">复制</button></div><pre><code id="code-2" class="language-python">from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
+
+
+class BatchCounter:
+    _instance = None
+    _creation_lock = Lock()
+
+    def __new__(cls):
+        # ponytail: 每次构造都加锁；有性能证据时优先在入口创建后传递实例。
+        with cls._creation_lock:
+            if cls._instance is None:
+                instance = super().__new__(cls)
+                instance._value = 0
+                instance._state_lock = Lock()
+                cls._instance = instance
+            return cls._instance
+
+    def __init_subclass__(cls, **kwargs):
+        raise TypeError(&quot;本教学单例不支持继承&quot;)
+
+    def finish_batch(self) -&gt; int:
+        with self._state_lock:
+            self._value += 1
+            return self._value
+
+    def value(self) -&gt; int:
+        with self._state_lock:
+            return self._value
+
+
+def demo() -&gt; None:
+    shared = BatchCounter()
+    before = shared.value()
+
+    def work(_: int) -&gt; tuple[bool, int]:
+        counter = BatchCounter()
+        return counter is shared, counter.finish_batch()
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(work, range(100)))
+
+    same_instance = all(same for same, _ in results)
+    numbers = sorted(number for _, number in results)
+    if not same_instance or numbers != list(range(before + 1, before + 101)):
+        raise AssertionError(&quot;实例唯一性或累计操作不正确&quot;)
+    if BatchCounter().value() != before + 100:
+        raise AssertionError(&quot;重复构造不应重置状态&quot;)
+    print(f&quot;所有线程拿到同一实例：{same_instance}&quot;)
+    print(f&quot;本轮累计完成批次：{shared.value() - before}&quot;)
+    print(&quot;自检通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre></div></details>
+<p>预期输出：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 3 行</span><button data-copy="code-3" aria-label="复制text代码">复制</button></div><pre><code id="code-3" class="language-text">所有线程拿到同一实例：True
+本轮累计完成批次：100
+自检通过
+</code></pre></div>
+<p><code>__new__</code> 负责返回实例。本例只在创建新实例时初始化字段；没有把 <code>_value = 0</code> 写入 <code>__init__</code>，因为正常构造语法即使拿回旧实例，仍可能再次调用 <code>__init__</code>，导致状态被重置。</p>
+<p>示例禁止继承，避免子类误复用基类单例字段。它只覆盖同一进程、同一类对象的正常构造调用，不承诺阻止绕过构造、重载模块、复制或序列化等路径。Python 下划线属性也不是真正的私有访问控制。</p>
+<h2 id="s6">6. 最容易漏掉的一点：实例安全，不等于状态安全</h2>
+<p><code>_creation_lock</code> 保护“是否已有实例 → 创建 → 保存”的过程。</p>
+<p><code>_state_lock</code> 保护共享计数器的读取和修改。<strong>确保只有一个对象，恰恰意味着更多调用者会同时访问同一份状态。</strong></p>
+<p>所以正确的单例获取方式，并不能自动让 <code>count += 1</code> 或“先检查再执行”这类业务操作安全。</p>
+<p>回到锅炉：即使 <code>fill()</code>、<code>boil()</code>、<code>drain()</code> 各自加锁，整个三步流程仍可能与另一个线程交错。若要求一批次不可被其他批次插入，就要把完整批次的操作范围纳入同步或明确的状态协调。真实设备还要有设备层约束，单例类不能代替它。</p>
+<p>并发自检能发现实现退化，但不能穷尽所有调度；正确性首先来自明确的加锁范围与共享状态边界。</p>
+<h2 id="s7">7. 实际项目里，先决定是否真的需要它</h2>
+<p>如果你的需求只是“多个对象共享同一个服务”，可以在入口创建一次，然后通过构造参数传给使用者。这样测试时更容易替换，也更容易看见依赖。</p>
+<p>如果你的需求是“同一进程的正常调用不能创建第二个实例”，再考虑类级单例。还要确定它何时释放资源、不同测试是否互相污染、能否容忍全局状态。</p>
+<p>如果你的需求是“整个集群只有一个任务执行者”或“跨进程编号唯一”，单例类不够。不同进程各有独立内存，需要在共享存储或协调机制上设计唯一性。这不是多加一把 Python 线程锁就能解决的问题。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>常见误解</th>
+<th>正确判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>名字叫 singleton 就保证唯一</td>
+<td>看构造路径、并发与作用范围</td>
+</tr>
+<tr>
+<td>单例保证每次业务操作线程安全</td>
+<td>实例创建和业务状态要分别处理</td>
+</tr>
+<tr>
+<td>所有方法做成静态方法就是单例</td>
+<td>静态工具方法不一定需要对象；它们与共享对象的职责不同</td>
+</tr>
+<tr>
+<td>到处获取单例，比传参方便就更好</td>
+<td>全局依赖更隐蔽，测试隔离与替换更困难</td>
+</tr>
+<tr>
+<td>Java 枚举解决了跨进程或跨类加载器唯一性</td>
+<td>没有；唯一性仍受运行环境和类型身份范围限制</td>
+</tr>
+</tbody></table></div>
+<h2 id="s8">8. 三分钟练习：识别两个不同的 bug</h2>
+<p>题目 A：开发者在单例类的 <code>__init__</code> 中写 <code>self._value = 0</code>，每次 <code>BatchCounter()</code> 后计数归零，原因是什么？</p>
+<p>题目 B：实例创建已经加锁，但 <code>finish_batch()</code> 不再加锁，能否保证累计正确？</p>
+<details>
+<summary>查看参考答案与改法</summary>
+
+<p>A：<code>__new__</code> 复用旧实例，不代表 <code>__init__</code> 只执行一次。应在受保护的首次创建阶段初始化状态，或用明确且同步的初始化机制，不能每次重置。</p>
+<p>B：不能从实例唯一推导共享数据操作安全。恢复围绕整个更新操作的锁；只保护读取、把加一和写回放在锁外，也不够。</p>
+<p>动手任务：把 demo 中任务数从 100 改为 200，并同步更新自检期望值。输出应为 200，所有任务仍拿到同一实例。不要因为一次偶然通过就删除业务锁。</p>
+</details>
+
+<details>
+<summary>自测：启动两个 Python 进程，它们的 BatchCounter 是同一个吗？</summary>
+
+<p>不是。两个进程各有类、静态字段和堆内存，因此各有自己的实例。线程池示例只验证一个进程里的共享。</p>
+</details>
+
+<h2 id="s9">9. 五章串起来：看到需求，先认变化点</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>你要解决的问题</th>
+<th>优先想到</th>
+<th>一句话辨别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同一任务换一种做法</td>
+<td>策略</td>
+<td>把行为传进去，可替换</td>
+</tr>
+<tr>
+<td>一次变化通知多个对象</td>
+<td>观察者</td>
+<td>订阅、退订、通知</td>
+</tr>
+<tr>
+<td>给一个对象叠加可选功能</td>
+<td>装饰者</td>
+<td>同接口包装并委托</td>
+</tr>
+<tr>
+<td>创建选择与使用流程分开</td>
+<td>工厂</td>
+<td>集中创建 / 子类创建 / 创建产品家族</td>
+</tr>
+<tr>
+<td>在明确范围内限制实例数量</td>
+<td>单件</td>
+<td>控制实例创建，并单独管理共享状态</td>
+</tr>
+</tbody></table></div>
+<p>综合练习：订单按配送方式选运费算法，是策略；订单状态更新通知多个页面，是观察者；日志与计时层包装同接口服务，可以是装饰者；切换一套配套供应商产品，是抽象工厂。共享一个服务实例可以直接在入口组装，不一定要额外使用单件模式。</p>
+<h2 id="s10">10. 一分钟复习与原书定位</h2>
+<p><strong>先证明“必须唯一”，再划定唯一的范围，最后分别解决创建竞争和业务状态竞争。</strong></p>
+<p>原书：<a href="%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F.pdf">本章 PDF</a>。Python 构造机制、模块缓存和线程锁的说明是语言迁移补充；不要把 Java 的实现直接改语法后照搬。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想补看的内容</th>
+<th>书中印刷页码</th>
+<th>本章 PDF 页码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>经典实现、锅炉与定义</td>
+<td>169–177</td>
+<td>1–9</td>
+</tr>
+<tr>
+<td>线程竞争与同步入口</td>
+<td>178–180</td>
+<td>10–12</td>
+</tr>
+<tr>
+<td>急切实例化与双重检查锁</td>
+<td>181–183</td>
+<td>13–15</td>
+</tr>
+<tr>
+<td>使用边界与枚举</td>
+<td>184–186</td>
+<td>16–18</td>
+</tr>
+</tbody></table></div>
+<p>掌握标准：你能为同一个需求解释“为什么需要单例”或“为什么一个普通共享对象就够”，而不只是写出一个 getInstance。</p>
+</article><nav class="bottom-nav" aria-label="上下章"><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">← 上一章 · 工厂模式</a><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html">回顾第一章 →</a></nav><footer class="footer">依据本地《Head First 设计模式（第二版）》对应章节重新编写。Python 示例与实践补充见正文。原 PDF 保持不变。</footer></main></div><script>const result=document.getElementById('result');let step=0;const unsafe=['A 检查为空，准备创建。','B 也检查为空，准备创建。','A 创建实例 #1，取得引用。','B 创建实例 #2，取得引用。结果：两个实例。'];const safe=['A 获得创建锁；检查为空。','B 请求同一把锁，只能等待。','A 创建实例 #1，保存引用，释放锁。','B 获得锁；看到已有实例 #1，复用。结果：一个实例。'];const reset=()=>{step=0;result.textContent='初始状态：实例为空。点击“下一步”。';document.getElementById('step').disabled=false;};document.getElementById('step').onclick=()=>{const lines=document.getElementById('locking').value==='safe'?safe:unsafe;step++;result.textContent=lines.slice(0,step).map((x,i)=>(i+1)+'. '+x).join('\n');if(step===lines.length){document.getElementById('step').disabled=true;result.textContent+='\n注意：这里仅讨论创建过程；业务状态仍需另行同步。';}};document.getElementById('locking').onchange=reset;document.getElementById('reset').onclick=reset;
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='已复制';}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(b.dataset.copy));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);b.textContent='已选中，按 Ctrl+C';}}));
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(max>0?scrollY/max*100:0)+'%';};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.querySelectorAll('details').forEach(x=>x.addEventListener('toggle',update));update();
+  let opened=[];addEventListener('beforeprint',()=>{opened=[...document.querySelectorAll('details')].filter(x=>!x.open);opened.forEach(x=>x.open=true);});addEventListener('afterprint',()=>{opened.forEach(x=>x.open=false);});</script></body></html>

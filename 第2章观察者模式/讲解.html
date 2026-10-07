@@ -1,0 +1,267 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="数据源只维护订阅关系，消费者各自决定收到数据后做什么。"><title>第2章观察者模式 · Python 实践讲解</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><div class="progress" aria-hidden="true"></div><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>01 — 05 · PYTHON 实践版 · 离线可读</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章学习路径</p><nav class="chapter-list" aria-label="章节切换"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html" ><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" class="active" aria-current="page"><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">本章目录</p><nav class="toc" aria-label="本章目录"><a href="#s1">1. 先记住这一句话</a><a href="#s2">2. 书中的气象站，真正难在哪里</a><a href="#s3">3. 推与拉：通知之后，数据怎么给</a><a href="#s4">4. 完整 Python 示例：两个订阅者与一次退订</a><a href="#s5">5. 一次 publish 到底发生了什么</a><a href="#s6">6. 工作中怎么用，以及什么时候不用</a><a href="#s7">7. 四个必须记住的边界</a><a href="#s8">8. 三分钟练习：增加高温提示</a><a href="#s9">9. 一分钟复习与原书定位</a></nav><p class="side-note">先理解变化点，再决定模式。<br>所有示例仅使用 Python 标准库。<br>Ctrl + P 可打印含答案的完整讲解。</p></aside><main class="main" id="main"><div class="hero"><p class="eyebrow">CHAPTER 02 / 发布变化</p><span class="hero-number" aria-hidden="true">02</span><h1>一处变化，<br>多处自动响应</h1><p class="intro">数据源只维护订阅关系，消费者各自决定收到数据后做什么。</p><div class="meta"><span class="tag">观察者模式</span><span class="tag">建议 20 分钟</span><span class="tag">Python 3.10+</span></div></div><div class="actions"><a href="练习题.html">章节测验 · 10 题 →</a><a href="%E8%AE%B2%E8%A7%A3%E7%A8%BF.md">Markdown 讲解稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py" download>下载 Python 示例 ↓</a><a href="%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.pdf">对照原书 PDF ↗</a></div><div class="concepts"><div><b>01</b>注册与退订</div><div><b>02</b>推送或拉取</div><div><b>03</b>明确通知边界</div></div><figure class="diagram" aria-label="新气象数据到WeatherStation到所有订阅者"><div class="diagram-flow"><div class="diagram-node">新气象数据</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">WeatherStation</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">所有订阅者</div></div><p>主题依赖回调约定，不需要知道每个显示组件的实现。</p></figure><section class="lab" aria-label="交互演示"><div class="lab-head"><b>动手看变化</b><span>浏览器演示 · Python 源码见下文</span></div><div class="lab-body"><p class="lab-desc">勾选要订阅的显示，设置温度后发布。取消勾选的显示保留上次读数，不再接收更新。</p><div class="controls"><label><input type="checkbox" id="screen" checked>当前天气屏</label><label><input type="checkbox" id="history" checked>历史记录</label><label for="temp">温度 °C <input id="temp" type="number" value="25" min="-100" max="100" step="1"></label><button id="publish">发布数据</button><button id="reset">重置</button></div><div class="result" id="result" aria-live="polite">天气屏：尚未收到数据
+历史记录：0 条
+本演示为同步推送，湿度固定为 60%。</div></div></section><article><blockquote>
+<p>学习目标：把“数据变了就逐个调用具体页面”的代码，改成可订阅、可退订的通知机制，并说清它的同步、顺序和异常边界。</p>
+</blockquote>
+<p>建议用时：速读 8 分钟，运行与练习 12 分钟。先读第 1、3、5、7 节，再运行气象站。</p>
+<h2 id="s1">1. 先记住这一句话</h2>
+<p><strong>观察者模式：一个对象维护订阅关系，状态变化后，通知所有已订阅的对象。</strong></p>
+<p>像订阅天气提醒：气象站产生新数据，你决定订阅或退订；气象站不必知道你收到数据后是更新屏幕、记录历史，还是发出提示。</p>
+<p>它描述一对多的依赖关系。一个观察者也可以订阅多个主题；同一个对象甚至可以既接收上游通知，又通知下游。</p>
+<h2 id="s2">2. 书中的气象站，真正难在哪里</h2>
+<p>第一版直接写：更新当前天气显示 → 更新统计显示 → 更新预报显示。这能运行，但气象站知道所有具体显示类，新增一个显示就要改它。</p>
+<p>变化的是“哪些对象关心数据，以及收到数据后做什么”；相对稳定的是“获得新测量值后发送通知”。把订阅名单独立管理，气象站只调用统一约定，显示就能自由增减。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>书中对象</th>
+<th>Python 示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主题 Subject</td>
+<td>WeatherData</td>
+<td>WeatherStation，保存状态与订阅者</td>
+</tr>
+<tr>
+<td>观察者 Observer</td>
+<td>各个显示组件</td>
+<td>接收 Weather 参数的回调函数</td>
+</tr>
+<tr>
+<td>注册 / 移除</td>
+<td>加入或离开通知列表</td>
+<td>subscribe / unsubscribe</td>
+</tr>
+<tr>
+<td>通知</td>
+<td>notifyObservers</td>
+<td>publish 中遍历回调</td>
+</tr>
+</tbody></table></div>
+<p>核心原则是松耦合：双方需要知道交互约定，但主题不依赖某个具体显示的实现。松耦合不是零依赖。</p>
+<h2 id="s3">3. 推与拉：通知之后，数据怎么给</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>调用形式</th>
+<th>好处</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>推</td>
+<td><code>callback(weather)</code></td>
+<td>一次拿到这次事件的数据；快照可被多个观察者读取</td>
+<td>数据约定变化可能影响消费者</td>
+</tr>
+<tr>
+<td>拉</td>
+<td><code>callback()</code>，观察者再读主题</td>
+<td>观察者按需读取；新增 getter 不必改全部回调签名</td>
+<td>观察者依赖读取接口；并发时多次读取可能不是同一版本</td>
+</tr>
+</tbody></table></div>
+<p>书中先推送温度、湿度、气压，再改成接到通知后拉取。本例选择推送一个不可变的 <code>Weather</code> 快照，让事件数据与某一次发布绑定。<strong>没有哪种方式永远更好。</strong></p>
+<p>推和拉都不等于异步：调用回调时直接执行其代码，就是同步通知。要跨线程或跨进程，还需要额外的调度或通信机制。</p>
+<h2 id="s4">4. 完整 Python 示例：两个订阅者与一次退订</h2>
+<p>同目录 <a href="%E7%A4%BA%E4%BE%8B.py">示例.py</a> 可直接运行：<code>python 示例.py</code>。要求 Python 3.10+，只用标准库。</p>
+<details class="code-details"><summary>展开完整 Python 示例 · 73 行 · 可复制运行</summary><div class="code-block"><div class="code-top"><span>PYTHON · 73 行</span><button data-copy="code-1" aria-label="复制python代码">复制</button></div><pre><code id="code-1" class="language-python">from dataclasses import dataclass
+from math import isfinite
+from typing import Callable
+
+
+@dataclass(frozen=True)
+class Weather:
+    temperature: float
+    humidity: float
+
+
+Observer = Callable[[Weather], None]
+
+
+class WeatherStation:
+    def __init__(self) -&gt; None:
+        self.latest: Weather | None = None
+        self._observers: list[Observer] = []
+
+    def subscribe(self, observer: Observer) -&gt; None:
+        if not callable(observer):
+            raise TypeError(&quot;观察者必须可调用&quot;)
+        if observer not in self._observers:
+            self._observers.append(observer)
+
+    def unsubscribe(self, observer: Observer) -&gt; None:
+        if observer in self._observers:
+            self._observers.remove(observer)
+
+    def publish(self, temperature: float, humidity: float) -&gt; None:
+        if not isfinite(temperature) or not isfinite(humidity):
+            raise ValueError(&quot;测量值必须是有限数&quot;)
+        if not 0 &lt;= humidity &lt;= 100:
+            raise ValueError(&quot;湿度必须在 0 到 100 之间&quot;)
+        event = Weather(temperature, humidity)
+        self.latest = event
+        # ponytail: 单线程同步通知；需要并发发布时再设计队列与调度。
+        for observer in tuple(self._observers):
+            observer(event)
+
+
+def demo() -&gt; None:
+    station = WeatherStation()
+    screen: list[Weather] = []
+    history: list[Weather] = []
+
+    def show(weather: Weather) -&gt; None:
+        screen.append(weather)
+        print(f&quot;屏幕：{weather.temperature:.0f}°C / {weather.humidity:.0f}%&quot;)
+
+    station.subscribe(show)
+    station.subscribe(history.append)
+    station.subscribe(show)  # 重复订阅不会重复通知。
+    station.publish(25, 60)
+    station.unsubscribe(show)
+    station.publish(28, 65)
+
+    if len(screen) != 1 or history != [Weather(25, 60), Weather(28, 65)]:
+        raise AssertionError(&quot;订阅或退订行为不正确&quot;)
+    try:
+        station.publish(20, 101)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(&quot;必须拒绝非法湿度&quot;)
+    if station.latest != Weather(28, 65):
+        raise AssertionError(&quot;非法数据不应覆盖有效状态&quot;)
+    print(f&quot;历史记录：{len(history)} 条&quot;)
+    print(&quot;自检通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre></div></details>
+<p>预期输出：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 3 行</span><button data-copy="code-2" aria-label="复制text代码">复制</button></div><pre><code id="code-2" class="language-text">屏幕：25°C / 60%
+历史记录：2 条
+自检通过
+</code></pre></div>
+<h2 id="s5">5. 一次 publish 到底发生了什么</h2>
+<ol>
+<li>先校验新数据，失败时不改变当前状态。</li>
+<li>创建不可变快照，保存为 <code>latest</code>。</li>
+<li>拷贝当前订阅列表，再依次执行其中的回调。</li>
+<li>第一次发布时，屏幕和历史各收到一份；退订屏幕后，第二次只进入历史。</li>
+</ol>
+<p><code>tuple(self._observers)</code> 解决的是“回调执行中修改列表”的遍历问题。本例约定：本轮按开始时的名单通知，新订阅从下一轮生效；本轮中途退订的回调仍可能收到本轮消息。<strong>列表快照不等于线程安全。</strong></p>
+<p><code>frozen=True</code> 在这里足够，因为事件只有数值字段；如果将来放入可变列表，冻结 dataclass 并不会自动把内部列表也冻结。</p>
+<p>本例观察者抛异常会中断发布，状态已经更新，后面的回调可能没执行。这是明确的失败语义。若业务要求所有订阅者都尝试执行，应逐个捕获并记录异常，最后汇总或上报，不能直接吞掉错误。</p>
+<h2 id="s6">6. 工作中怎么用，以及什么时候不用</h2>
+<p>适合：界面数据更新多个视图、编辑器事件通知、进程内状态变化触发多个独立响应。新增消费者只需写回调并注册，不必修改主题的发布逻辑。</p>
+<p>例如增加温度超标提示：实现接收 <code>Weather</code> 的函数，只在温度超过阈值时输出提示，然后订阅它。这里阈值应是业务配置，不能从设计模式里推导出来。</p>
+<p>不适合：步骤必须严格排序、失败必须整体回滚的主业务流程。比如“扣库存成功才扣款”，通常应明确编排，而不是让两个互不知情的观察者自行协调。</p>
+<p><strong>观察者与消息队列不是一回事。</strong> 本例是同一进程内直接调用；跨进程发布订阅还涉及持久化、重试、重复消费和顺序等问题，不能只复制这段代码就获得那些能力。</p>
+<p>Python 函数、绑定方法都能做观察者，已有事件框架时优先复用。书中还用 Swing 按钮监听说明同一思想；旧 Java <code>Observable/Observer</code> API 已被弃用这一点不影响模式本身的价值。</p>
+<h2 id="s7">7. 四个必须记住的边界</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>本例行为</th>
+<th>在项目里要作出的决定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>慢回调</td>
+<td>阻塞本次发布</td>
+<td>是否允许同步等待，是否需要后台队列</td>
+</tr>
+<tr>
+<td>回调异常</td>
+<td>立即传播，中止后续通知</td>
+<td>中止、继续并汇总，还是重试</td>
+</tr>
+<tr>
+<td>订阅者生命周期</td>
+<td>主题持有强引用</td>
+<td>页面关闭或对象停用时退订，避免长期残留</td>
+</tr>
+<tr>
+<td>通知顺序</td>
+<td>当前列表按注册顺序遍历</td>
+<td>若业务依赖顺序，要把它写成明确约定，不能假设所有实现都一样</td>
+</tr>
+</tbody></table></div>
+<p>回调里再次发布还可能造成递归通知或循环。没有这种需求时，不要在回调中修改同一主题；有需求时先定义事件顺序，再考虑队列。</p>
+<h2 id="s8">8. 三分钟练习：增加高温提示</h2>
+<p>任务：温度达到 30°C 时输出提示，29°C 时不提示；订阅后发布两次，再退订。不要修改 <code>publish()</code>。</p>
+<details>
+<summary>查看参考答案</summary>
+
+<div class="code-block"><div class="code-top"><span>PYTHON · 13 行</span><button data-copy="code-3" aria-label="复制python代码">复制</button></div><pre><code id="code-3" class="language-python">alerts = []
+
+def warn(weather: Weather) -&gt; None:
+    if weather.temperature &gt;= 30:
+        alerts.append(weather.temperature)
+
+station = WeatherStation()
+station.subscribe(warn)
+station.publish(29, 50)
+station.publish(31, 50)
+station.unsubscribe(warn)
+station.publish(35, 50)
+assert alerts == [31]
+</code></pre></div>
+<p>检查点：只改变消费者与订阅关系，气象站核心逻辑不变。若只订阅一次却收到两次通知，检查是否重复注册、重复发布或产生递归通知。</p>
+</details>
+
+<details>
+<summary>自测：推送一个对象，就一定比拉取好吗？</summary>
+
+<p>不是。推送快照有利于表达某次事件；拉取适合消费者只需要不同的小部分状态。判断依据是数据一致性、接口变化频率和调用成本，不是名字。</p>
+</details>
+
+<h2 id="s9">9. 一分钟复习与原书定位</h2>
+<p><strong>看到“一处状态变化，多个独立消费者响应”，想到观察者。写之前明确注册、退订、通知、异常这四件事。</strong></p>
+<p>原书：<a href="%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.pdf">本章 PDF</a>。讲解与 Python 示例为重新编写；同步失败语义与数据快照说明属于实践补充。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想补看的内容</th>
+<th>书中印刷页码</th>
+<th>本章 PDF 页码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>气象站与紧耦合问题</td>
+<td>39–43</td>
+<td>3–7</td>
+</tr>
+<tr>
+<td>定义、结构、松耦合</td>
+<td>44–54</td>
+<td>8–18</td>
+</tr>
+<tr>
+<td>实现与测试</td>
+<td>57–62</td>
+<td>21–26</td>
+</tr>
+<tr>
+<td>推拉、监听器、改进实现</td>
+<td>63–71</td>
+<td>27–35</td>
+</tr>
+</tbody></table></div>
+<p>和第 1 章的区别：策略通常挑一个行为来完成任务；观察者把一次变化通知给多个订阅者。</p>
+</article><nav class="bottom-nav" aria-label="上下章"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html">← 上一章 · 策略模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">下一章 · 装饰者模式 →</a></nav><footer class="footer">依据本地《Head First 设计模式（第二版）》对应章节重新编写。Python 示例与实践补充见正文。原 PDF 保持不变。</footer></main></div><script>const result=document.getElementById('result');let reading=null,records=[];const render=()=>{result.textContent='天气屏：'+(reading===null?'尚未收到数据':reading+'°C / 60%')+'\n历史记录：'+records.length+' 条'+(records.length?'（'+records.join('、')+'°C）':'');};document.getElementById('publish').onclick=()=>{const input=document.getElementById('temp');if(!input.reportValidity()||input.value===''){result.textContent='请输入 -100 到 100 之间的整数温度。';return;}const t=Number(input.value);let recipients=[];if(document.getElementById('screen').checked){reading=t;recipients.push('天气屏');}if(document.getElementById('history').checked){records.push(t);recipients.push('历史记录');}render();result.textContent+='\n本次通知：'+(recipients.join('、')||'无人订阅');};document.getElementById('reset').onclick=()=>{reading=null;records=[];document.getElementById('temp').value=25;document.getElementById('screen').checked=true;document.getElementById('history').checked=true;render();};
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='已复制';}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(b.dataset.copy));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);b.textContent='已选中，按 Ctrl+C';}}));
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(max>0?scrollY/max*100:0)+'%';};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.querySelectorAll('details').forEach(x=>x.addEventListener('toggle',update));update();
+  let opened=[];addEventListener('beforeprint',()=>{opened=[...document.querySelectorAll('details')].filter(x=>!x.open);opened.forEach(x=>x.open=true);});addEventListener('afterprint',()=>{opened.forEach(x=>x.open=false);});</script></body></html>

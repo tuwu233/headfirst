@@ -1,0 +1,6 @@
+# 原书及拆分章节 PDF 仅保留在本地。
+*.[pP][dD][fF]
+
+# Python 缓存。
+__pycache__/
+*.py[cod]

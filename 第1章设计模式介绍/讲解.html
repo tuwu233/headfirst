@@ -1,0 +1,242 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="让鸭子持有飞行行为。换一种飞法，不必重写鸭子。"><title>第1章设计模式介绍 · Python 实践讲解</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><div class="progress" aria-hidden="true"></div><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>01 — 05 · PYTHON 实践版 · 离线可读</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章学习路径</p><nav class="chapter-list" aria-label="章节切换"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html" class="active" aria-current="page"><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">本章目录</p><nav class="toc" aria-label="本章目录"><a href="#s1">1. 先记住这一句话</a><a href="#s2">2. 从书里的鸭子，看懂问题怎么产生</a><a href="#s3">3. 三条原则，直接对应三种动作</a><a href="#s4">4. 完整 Python 示例：运行时给模型鸭换飞法</a><a href="#s5">5. 顺着调用走一遍，避免只会背类图</a><a href="#s6">6. 把它搬到工作里：先找“可替换”的变化</a><a href="#s7">7. 常见误区</a><a href="#s8">8. 三分钟练习：给模型鸭增加滑翔</a><a href="#s9">9. 一分钟复习与原书定位</a></nav><p class="side-note">先理解变化点，再决定模式。<br>所有示例仅使用 Python 标准库。<br>Ctrl + P 可打印含答案的完整讲解。</p></aside><main class="main" id="main"><div class="hero"><p class="eyebrow">CHAPTER 01 / 替换行为</p><span class="hero-number" aria-hidden="true">01</span><h1>把变化装进<br>可替换的行为</h1><p class="intro">让鸭子持有飞行行为。换一种飞法，不必重写鸭子。</p><div class="meta"><span class="tag">策略模式</span><span class="tag">建议 18 分钟</span><span class="tag">Python 3.10+</span></div></div><div class="actions"><a href="练习题.html">章节测验 · 10 题 →</a><a href="%E8%AE%B2%E8%A7%A3%E7%A8%BF.md">Markdown 讲解稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py" download>下载 Python 示例 ↓</a><a href="%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D.pdf">对照原书 PDF ↗</a></div><div class="concepts"><div><b>01</b>找出变化的部分</div><div><b>02</b>约定同一接口</div><div><b>03</b>组合与委托</div></div><figure class="diagram" aria-label="调用者到Duck到当前飞行行为"><div class="diagram-flow"><div class="diagram-node">调用者</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">Duck</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">当前飞行行为</div></div><p>改变行为引用，下一次调用就使用新的策略。</p></figure><section class="lab" aria-label="交互演示"><div class="lab-head"><b>动手看变化</b><span>浏览器演示 · Python 源码见下文</span></div><div class="lab-body"><p class="lab-desc">同一个模型鸭，切换它持有的函数。留意调用入口始终是 perform_fly()。</p><div class="controls"><button data-fly="不会飞" aria-pressed="true">不会飞</button><button data-fly="用翅膀飞行" aria-pressed="false">用翅膀飞</button><button data-fly="用火箭飞行" aria-pressed="false">火箭飞行</button></div><div class="result" id="result" aria-live="polite">Duck.perform_fly() → fly_no_way() → 不会飞</div></div></section><article><blockquote>
+<p>学习目标：看见一段总在修改的分支代码时，能判断是否该把它拆成策略，并用 Python 写出可替换、可测试的行为。</p>
+</blockquote>
+<p>建议用时：速读 8 分钟，运行与练习 10 分钟。先读第 1、3、5、8 节；需要动手时再展开完整示例。</p>
+<h2 id="s1">1. 先记住这一句话</h2>
+<p><strong>策略模式：把完成同一件事的不同做法，做成可替换的行为，交给使用它的对象。</strong></p>
+<p>鸭子不需要自己知道所有飞法。它只需要保存一个“飞行行为”，需要飞时调用它。今天用翅膀，明天换火箭，鸭子的调用代码不用跟着改。</p>
+<p>这里的“算法”不只是排序或数学公式，也可以是运费规则、折扣规则、文件导出方式和重试策略。</p>
+<h2 id="s2">2. 从书里的鸭子，看懂问题怎么产生</h2>
+<p>最初，所有鸭子都继承 <code>Duck</code>，共享游泳和叫声。后来给父类增加 <code>fly()</code>，橡皮鸭也继承了飞行，业务就错了。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>尝试</th>
+<th>为什么暂时有效</th>
+<th>后续问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>把飞行放进父类</td>
+<td>所有子类立即复用</td>
+<td>不该飞的鸭子也会飞，父类改动影响一大片</td>
+</tr>
+<tr>
+<td>每个不飞的子类覆盖方法</td>
+<td>修好了该子类</td>
+<td>相同实现散落多处，新增子类容易忘记覆盖</td>
+</tr>
+<tr>
+<td>只让会飞的鸭子实现接口</td>
+<td>表达了能力差别</td>
+<td>若每类仍各写一遍飞行代码，实现依旧重复</td>
+</tr>
+<tr>
+<td>独立飞行行为，鸭子持有它</td>
+<td>行为可以共享、组合和替换</td>
+<td>多一层调用关系，需要清楚命名</td>
+</tr>
+</tbody></table></div>
+<p><strong>判断重点不是“继承坏不坏”，而是“变化的东西是不是和继承层次绑死了”。</strong> 稳定的“是一种”关系仍可用继承；不同维度经常独立变化时，组合通常更合适。</p>
+<h2 id="s3">3. 三条原则，直接对应三种动作</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>原则</th>
+<th>白话</th>
+<th>在本例中怎么做</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>封装变化</td>
+<td>把经常改的部分单独放</td>
+<td>飞行、叫声独立于鸭子的其他行为</td>
+</tr>
+<tr>
+<td>针对接口编程</td>
+<td>依赖一种约定，不依赖某个具体实现</td>
+<td>鸭子只要求行为“可调用且返回说明”</td>
+</tr>
+<tr>
+<td>优先组合而非继承</td>
+<td>给对象安装能力</td>
+<td><code>Duck</code> 持有飞行函数，而不是为了每种飞法新增鸭子子类</td>
+</tr>
+</tbody></table></div>
+<p>“接口”不等于必须写 Java 式接口类。在 Python 中，可以是函数签名、鸭子类型，也可以用 <code>Protocol</code> 描述约定。一个简单行为用函数就够了；需要保存复杂状态时，再考虑策略对象。</p>
+<p>结构可以按一句话读出来：<code>调用者 → Duck.perform_fly() → 当前 fly_behavior()</code>。Duck 是使用策略的对象，<code>fly_with_wings</code>、<code>fly_no_way</code>、<code>fly_with_rocket</code> 是同一个算法家族。</p>
+<h2 id="s4">4. 完整 Python 示例：运行时给模型鸭换飞法</h2>
+<p>同目录提供 <a href="%E7%A4%BA%E4%BE%8B.py">示例.py</a>。使用 Python 3.10 或更高版本，无需安装第三方库；进入本章目录运行 <code>python 示例.py</code>。程序自带检查，失败时会抛出异常。</p>
+<details class="code-details"><summary>展开完整 Python 示例 · 59 行 · 可复制运行</summary><div class="code-block"><div class="code-top"><span>PYTHON · 59 行</span><button data-copy="code-1" aria-label="复制python代码">复制</button></div><pre><code id="code-1" class="language-python">from dataclasses import dataclass
+from typing import Callable
+
+Behavior = Callable[[], str]
+
+
+def fly_with_wings() -&gt; str:
+    return &quot;用翅膀飞行&quot;
+
+
+def fly_no_way() -&gt; str:
+    return &quot;不会飞&quot;
+
+
+def fly_with_rocket() -&gt; str:
+    return &quot;用火箭飞行&quot;
+
+
+def quack() -&gt; str:
+    return &quot;嘎嘎叫&quot;
+
+
+def squeak() -&gt; str:
+    return &quot;吱吱叫&quot;
+
+
+@dataclass
+class Duck:
+    name: str
+    fly_behavior: Behavior
+    quack_behavior: Behavior
+
+    def perform_fly(self) -&gt; str:
+        return self.fly_behavior()
+
+    def perform_quack(self) -&gt; str:
+        return self.quack_behavior()
+
+
+def demo() -&gt; None:
+    mallard = Duck(&quot;绿头鸭&quot;, fly_with_wings, quack)
+    model = Duck(&quot;模型鸭&quot;, fly_no_way, squeak)
+    before = model.perform_fly()
+    model.fly_behavior = fly_with_rocket
+    after = model.perform_fly()
+
+    actual = (mallard.perform_fly(), before, after, model.perform_quack())
+    expected = (&quot;用翅膀飞行&quot;, &quot;不会飞&quot;, &quot;用火箭飞行&quot;, &quot;吱吱叫&quot;)
+    if actual != expected:
+        raise AssertionError(actual)
+    print(&quot;绿头鸭：&quot;, actual[0], sep=&quot;&quot;)
+    print(&quot;模型鸭换装前：&quot;, before, sep=&quot;&quot;)
+    print(&quot;模型鸭换装后：&quot;, after, sep=&quot;&quot;)
+    print(&quot;模型鸭叫声：&quot;, actual[3], sep=&quot;&quot;)
+    print(&quot;自检通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre></div></details>
+<p>预期输出：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 5 行</span><button data-copy="code-2" aria-label="复制text代码">复制</button></div><pre><code id="code-2" class="language-text">绿头鸭：用翅膀飞行
+模型鸭换装前：不会飞
+模型鸭换装后：用火箭飞行
+模型鸭叫声：吱吱叫
+自检通过
+</code></pre></div>
+<h2 id="s5">5. 顺着调用走一遍，避免只会背类图</h2>
+<ol>
+<li><code>Duck(..., fly_no_way, squeak)</code> 把两个函数交给模型鸭。注意传的是函数，不是 <code>fly_no_way()</code> 的结果。</li>
+<li><code>perform_fly()</code> 不检查鸭子品种，而是把工作交给当前飞行函数。这叫委托。</li>
+<li><code>model.fly_behavior = fly_with_rocket</code> 只替换飞行行为，不动叫声，也不修改 <code>Duck</code>。</li>
+<li>再次调用同一个 <code>perform_fly()</code>，结果就变了。这是组合带来的运行时弹性。</li>
+</ol>
+<p>这些函数没有可变状态，所以多只鸭子可安全复用同一个函数。若策略对象保存计数、缓存等状态，复用之前要确认：这些状态到底应该共享，还是每只鸭子各有一份。</p>
+<p>示例省去了鸭子继承树，保留策略的核心关系。书中飞行和叫声是两组策略；两者可以独立替换，避免为每种组合建立子类。</p>
+<h2 id="s6">6. 把它搬到工作里：先找“可替换”的变化</h2>
+<p>例如订单支持普通快递、自提、加急快递。把运费计算写成相同签名的函数：<code>shipping(weight_kg) -&gt; int</code>，返回整数“分”。订单对象接收其中一个函数，结算时直接调用。</p>
+<p>新增“同城配送”时，增加一个函数，在创建订单的入口选择它；订单的结算流程不必改。<strong>选择策略的分支仍可能存在，只是集中到了组装入口，策略模式不会让所有 <code>if</code> 消失。</strong></p>
+<p>落地步骤：找变化点 → 约定统一输入输出 → 抽出两种实际存在的实现 → 把实现传给使用者 → 分别测试实现与委托关系。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>值得用策略</th>
+<th>先保持简单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同一行为有多种实现，且经常增加</td>
+<td>只有一个稳定做法</td>
+</tr>
+<tr>
+<td>多个业务对象重复一组判断</td>
+<td>一个很短、清楚且稳定的分支</td>
+</tr>
+<tr>
+<td>需要按配置或运行状态切换做法</td>
+<td>不需要替换，也没有复用问题</td>
+</tr>
+</tbody></table></div>
+<h2 id="s7">7. 常见误区</h2>
+<ul>
+<li><strong>“学了模式，就要把每个函数变成一个类。”</strong> 不需要。Python 的函数本身就是对象。</li>
+<li><strong>“组合完全取代继承。”</strong> 不是。这里拆的是易变行为，稳定的类型关系仍然可以保留。</li>
+<li><strong>“有接口，代码就自动解耦。”</strong> 如果使用者仍写满具体类型判断，接口只是外壳。</li>
+<li><strong>“策略就是把任意代码拆开。”</strong> 一组策略应解决同一个问题、遵守同一输入输出约定，才有可替换性。</li>
+<li><strong>“模式是现成库。”</strong> 模式描述设计经验；库提供可调用实现。模式主要帮助你组织自己的代码，并让团队用共同词汇讨论设计。</li>
+</ul>
+<h2 id="s8">8. 三分钟练习：给模型鸭增加滑翔</h2>
+<p>任务：新增 <code>glide()</code>，返回“滑翔”；让模型鸭先滑翔，再切回不会飞。禁止修改 <code>Duck.perform_fly()</code>。</p>
+<details>
+<summary>查看参考答案与检查点</summary>
+
+<div class="code-block"><div class="code-top"><span>PYTHON · 7 行</span><button data-copy="code-3" aria-label="复制python代码">复制</button></div><pre><code id="code-3" class="language-python">def glide() -&gt; str:
+    return &quot;滑翔&quot;
+
+model = Duck(&quot;模型鸭&quot;, glide, squeak)
+assert model.perform_fly() == &quot;滑翔&quot;
+model.fly_behavior = fly_no_way
+assert model.perform_fly() == &quot;不会飞&quot;
+</code></pre></div>
+<p>只新增行为，并在组装处更换引用。若你去给 <code>perform_fly()</code> 加 <code>if name == ...</code>，就又把变化放回了使用者。</p>
+</details>
+
+<details>
+<summary>自测：为什么不直接写 Duck 的很多子类？</summary>
+
+<p>飞法与叫法可能独立变化。用子类表达所有组合，会让数量增加、相同实现重复；用两个行为引用，就能独立组合。只有真实类型差异、稳定的继承关系时，子类才更有意义。</p>
+</details>
+
+<h2 id="s9">9. 一分钟复习与原书定位</h2>
+<p><strong>看到“同一任务，多种可替换做法”，想到策略。你要能指出：谁在使用行为、谁提供行为、在哪里选择行为。</strong></p>
+<p>原书：<a href="%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D.pdf">本章 PDF</a>。本讲解是重新组织的学习稿，示例为独立编写的 Python 版本。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想补看的内容</th>
+<th>书中印刷页码</th>
+<th>本章 PDF 页码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>鸭子设计为什么失控</td>
+<td>2–9</td>
+<td>2–9</td>
+</tr>
+<tr>
+<td>分离行为、接口与组合</td>
+<td>10–23</td>
+<td>10–23</td>
+</tr>
+<tr>
+<td>策略定义和武器练习</td>
+<td>24–25</td>
+<td>24–25</td>
+</tr>
+<tr>
+<td>模式的用途与共同词汇</td>
+<td>26–32</td>
+<td>26–32</td>
+</tr>
+</tbody></table></div>
+<p>下一章的变化点不再是“用哪种做法”，而是“有哪些对象需要知道变化”。</p>
+</article><nav class="bottom-nav" aria-label="上下章"><a href="#main">↑ 回到本章开头</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">下一章 · 观察者模式 →</a></nav><footer class="footer">依据本地《Head First 设计模式（第二版）》对应章节重新编写。Python 示例与实践补充见正文。原 PDF 保持不变。</footer></main></div><script>const result=document.getElementById('result');const names={'不会飞':'fly_no_way','用翅膀飞行':'fly_with_wings','用火箭飞行':'fly_with_rocket'};document.querySelectorAll('[data-fly]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-fly]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));result.textContent='Duck.perform_fly() → '+names[b.dataset.fly]+'() → '+b.dataset.fly;}));
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='已复制';}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(b.dataset.copy));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);b.textContent='已选中，按 Ctrl+C';}}));
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(max>0?scrollY/max*100:0)+'%';};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.querySelectorAll('details').forEach(x=>x.addEventListener('toggle',update));update();
+  let opened=[];addEventListener('beforeprint',()=>{opened=[...document.querySelectorAll('details')].filter(x=>!x.open);opened.forEach(x=>x.open=true);});addEventListener('afterprint',()=>{opened.forEach(x=>x.open=false);});</script></body></html>

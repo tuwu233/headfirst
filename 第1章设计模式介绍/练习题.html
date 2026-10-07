@@ -1,0 +1,186 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章设计模式介绍 · 章节测验</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+
+
+.quiz-intro{background:#e8ede4;padding:18px 22px;border:1px solid var(--line);border-radius:12px;font-size:14px;margin:20px 0 28px}.quiz-intro p{margin:5px 0}.quiz-jumps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.quiz-jumps a{display:block;text-align:center;padding:7px 0;background:#fffef9;border:1px solid var(--line);border-radius:7px;text-decoration:none;font:13px/1.7 ui-monospace,monospace}.quiz-jumps a.done{background:#216c53;color:white;border-color:#216c53}.quiz-progress{font-size:13px;margin:15px 0;color:var(--green);font-weight:700}.question{margin:25px 0 30px;background:var(--white);border:1px solid var(--line);border-radius:13px;padding:24px;scroll-margin-top:30px}.q-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:15px}.q-meta b{color:var(--green);font-family:monospace}.question fieldset{border:0;margin:0;padding:0;min-width:0}.question legend{font-weight:650;font-size:17px;line-height:1.8;padding:0;width:100%}.question pre{margin:18px 0;border-radius:9px;font-size:13px;max-height:none}.question pre code{white-space:pre;overflow-wrap:normal}.options{display:grid;gap:10px;margin-top:18px}.option{display:flex;align-items:flex-start;gap:12px;border:1px solid var(--line);border-radius:9px;padding:12px 15px;cursor:pointer;font-size:14px;line-height:1.7}.option:hover{background:#f1f4ed}.option:has(input:checked){border-color:var(--green);background:#e8f1e5}.option input{width:17px;height:17px;flex:none;margin:4px 0 0;accent-color:var(--green)}.option b{margin-right:8px}.question textarea{display:block;width:100%;min-height:190px;resize:vertical;padding:15px;border:1px solid var(--line);border-radius:9px;background:#fbfcf8;font:14px/1.8 Consolas,'Microsoft YaHei',monospace;color:var(--ink);margin-top:14px}.answer-label{display:block;font-size:12px;color:var(--muted);margin-top:17px}.feedback{margin-top:20px;border-top:1px solid var(--line);padding:20px 0 0;font-size:14px}.feedback h3{font-size:15px;margin:0 0 12px;color:var(--green)}.feedback p{margin:10px 0}.feedback.incorrect h3{color:#9a421e}.feedback ul{padding-left:22px}.feedback a{font-size:13px}.self-label{display:flex;align-items:center;gap:12px;margin:18px 0;font-size:13px}.self-label select{max-width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font:inherit}.score-summary{scroll-margin-top:28px;border:1px solid #aac9b7;background:#e5efe3;border-radius:13px;padding:24px;margin:28px 0}.score-summary h2{font-size:29px;margin:4px 0}.score-summary p{font-size:14px}.score-summary .small{font-size:12px}.submit-panel{padding:24px;background:#e8ede4;border-radius:12px}.submit-panel .controls{margin:15px 0}.primary{background:var(--green);border-color:var(--green);color:white;font-weight:700}.primary:hover{background:#18513f}.question textarea:focus{outline:2px solid var(--green);outline-offset:2px}.status{font-size:13px;color:var(--green);min-height:24px}.save-note{font-size:11px;color:var(--muted)}.quiz-main .hero h1{font-size:42px}.quiz-main .hero{padding-right:60px}.mobile-progress{display:none}.quiz-main .intro{margin-bottom:20px}.question .q-no{letter-spacing:.1em}.bottom-nav a{max-width:48%}
+@media(max-width:680px){.question{padding:18px 15px}.question legend{font-size:16px}.option{padding:11px 10px;font-size:13px}.quiz-main .hero h1{font-size:31px}.quiz-main .hero{padding-right:42px}.quiz-intro{padding:14px 16px;font-size:13px}.self-label{flex-wrap:wrap}.quiz-jumps{margin:13px 0}.sidebar .quiz-progress{display:none}.mobile-progress{display:block;font-size:12px;color:var(--green);margin-top:14px}.score-summary{padding:18px}.score-summary h2{font-size:24px}.submit-panel{padding:18px}.feedback{font-size:13px}.question pre{padding:13px}.question textarea{font-size:13px}}
+@media print{.sidebar,.topbar,.actions,.submit-panel,.bottom-nav,.mobile-progress{display:none}.question{break-inside:auto;padding:14px}.option{padding:6px}.question textarea{min-height:110px}.feedback[hidden]{display:none!important}.hero-number{display:none}.quiz-main .hero h1{font-size:25px}}
+</style></head><body><a class="skip" href="#main">跳到题目</a><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>PYTHON 实践版 · 章节测验</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章练习</p><nav class="chapter-list" aria-label="章节测验"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E7%BB%83%E4%B9%A0%E9%A2%98.html" class="active" aria-current="page"><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">题目定位</p><nav class="quiz-jumps" aria-label="题目定位"><a href="#q1" data-jump="0" aria-label="第 1 题">01</a><a href="#q2" data-jump="1" aria-label="第 2 题">02</a><a href="#q3" data-jump="2" aria-label="第 3 题">03</a><a href="#q4" data-jump="3" aria-label="第 4 题">04</a><a href="#q5" data-jump="4" aria-label="第 5 题">05</a><a href="#q6" data-jump="5" aria-label="第 6 题">06</a><a href="#q7" data-jump="6" aria-label="第 7 题">07</a><a href="#q8" data-jump="7" aria-label="第 8 题">08</a><a href="#q9" data-jump="8" aria-label="第 9 题">09</a><a href="#q10" data-jump="9" aria-label="第 10 题">10</a></nav><p class="quiz-progress" data-progress></p><p class="side-note">8 道客观题 · 自动判分<br>2 道应用题 · 按要点自评<br>建议 20—30 分钟独立完成</p><a href="讲解.html">← 返回本章讲解</a></aside><main id="main" class="main quiz-main"><div class="hero"><p class="eyebrow">CHAPTER 01 / 检验理解与应用</p><span class="hero-number" aria-hidden="true">01</span><h1>策略模式<br>你能独立解决了吗？</h1><p class="intro">能否识别独立变化的行为，并通过组合替换它。先作答，再看解析。</p><div class="meta"><span class="tag">10 道题 / 100 分</span><span class="tag">Python 3.10+</span><span class="tag">离线可用</span></div></div><div class="actions"><a href="讲解.html">返回讲解 ↗</a><a href="%E7%BB%83%E4%B9%A0%E9%A2%98.md">Markdown 题稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py">查看本章示例 ↗</a></div><div class="quiz-intro"><p><strong>评分规则：</strong>每题 10 分。单选题选一项；多选题全部选对才得分，漏选、多选均为 0 分。未作答为 0 分。</p><p>第 9—10 题按两条要点自评，每条 5 分。交卷后才显示答案；修改作答后需要重新交卷。</p><p class="save-note" id="save-note">正在读取作答进度…</p></div><p class="mobile-progress" data-progress></p><div class="score-summary" id="score-summary" aria-live="polite" hidden></div><section class="question" id="q1" aria-label="第 1 题"><div class="q-meta"><b class="q-no">QUESTION 01</b><span>单选题</span><span>10 分</span><span>模式识别</span></div><fieldset><legend>结算系统支持普通、加急、自提三种运费算法，运行时按订单选择。最直接匹配哪个模式？</legend><div class="options"><label class="option"><input type="radio" name="q0" value="0"><span><b>A.</b>观察者：通知所有算法</span></label><label class="option"><input type="radio" name="q0" value="1"><span><b>B.</b>策略：替换运费计算行为</span></label><label class="option"><input type="radio" name="q0" value="2"><span><b>C.</b>单件：只能存在一种算法</span></label><label class="option"><input type="radio" name="q0" value="3"><span><b>D.</b>装饰者：必须把三种算法逐层包装</span></label></div></fieldset><div id="feedback-0" class="feedback" hidden></div></section><section class="question" id="q2" aria-label="第 2 题"><div class="q-meta"><b class="q-no">QUESTION 02</b><span>单选题</span><span>10 分</span><span>变化点</span></div><fieldset><legend>把 fly() 加到 Duck 父类后，橡皮鸭也能飞。最值得先检查的设计问题是什么？</legend><div class="options"><label class="option"><input type="radio" name="q1" value="0"><span><b>A.</b>方法名太短</span></label><label class="option"><input type="radio" name="q1" value="1"><span><b>B.</b>子类太少，应为每个对象建一个子类</span></label><label class="option"><input type="radio" name="q1" value="2"><span><b>C.</b>Python 不支持面向对象</span></label><label class="option"><input type="radio" name="q1" value="3"><span><b>D.</b>易变能力被绑定到并不适用所有子类的继承层次</span></label></div></fieldset><div id="feedback-1" class="feedback" hidden></div></section><section class="question" id="q3" aria-label="第 3 题"><div class="q-meta"><b class="q-no">QUESTION 03</b><span>单选题</span><span>10 分</span><span>Python 实现</span></div><fieldset><legend>Python 中，若策略只做一次简单计算且没有内部状态，通常应先采用哪种实现？</legend><div class="options"><label class="option"><input type="radio" name="q2" value="0"><span><b>A.</b>签名一致的普通函数</span></label><label class="option"><input type="radio" name="q2" value="1"><span><b>B.</b>每个函数再包装四层抽象类</span></label><label class="option"><input type="radio" name="q2" value="2"><span><b>C.</b>必须使用元类</span></label><label class="option"><input type="radio" name="q2" value="3"><span><b>D.</b>必须先定义 Java 式接口类</span></label></div></fieldset><div id="feedback-2" class="feedback" hidden></div></section><section class="question" id="q4" aria-label="第 4 题"><div class="q-meta"><b class="q-no">QUESTION 04</b><span>单选题</span><span>10 分</span><span>需求落地</span></div><fieldset><legend>已经使用 shipping(weight) 策略。新增同城配送，下面哪种改动最符合设计意图？</legend><div class="options"><label class="option"><input type="radio" name="q3" value="0"><span><b>A.</b>在所有订单对象里加入同城配送分支</span></label><label class="option"><input type="radio" name="q3" value="1"><span><b>B.</b>让旧策略自动调用所有新策略</span></label><label class="option"><input type="radio" name="q3" value="2"><span><b>C.</b>新增同签名策略，并在组装入口选用它</span></label><label class="option"><input type="radio" name="q3" value="3"><span><b>D.</b>把所有算法复制到订单基类</span></label></div></fieldset><div id="feedback-3" class="feedback" hidden></div></section><section class="question" id="q5" aria-label="第 5 题"><div class="q-meta"><b class="q-no">QUESTION 05</b><span>多选题</span><span>10 分</span><span>组合与共享</span></div><fieldset><legend>关于策略的替换和共享，哪些说法成立？选择所有正确项。</legend><div class="options"><label class="option"><input type="checkbox" name="q4" value="0"><span><b>A.</b>无可变状态的行为函数可以被多个客户复用</span></label><label class="option"><input type="checkbox" name="q4" value="1"><span><b>B.</b>策略对象只要叫策略，就一定可以安全共享可变状态</span></label><label class="option"><input type="checkbox" name="q4" value="2"><span><b>C.</b>两组独立行为可以分别组合，不必枚举全部子类组合</span></label><label class="option"><input type="checkbox" name="q4" value="3"><span><b>D.</b>策略模式要求删除程序中的全部继承关系</span></label></div></fieldset><div id="feedback-4" class="feedback" hidden></div></section><section class="question" id="q6" aria-label="第 6 题"><div class="q-meta"><b class="q-no">QUESTION 06</b><span>多选题</span><span>10 分</span><span>选型边界</span></div><fieldset><legend>哪些情况构成引入策略的实际理由？选择所有正确项。</legend><div class="options"><label class="option"><input type="checkbox" name="q5" value="0"><span><b>A.</b>只有一条稳定的一行计算公式</span></label><label class="option"><input type="checkbox" name="q5" value="1"><span><b>B.</b>多个业务对象反复复制同一组算法分支</span></label><label class="option"><input type="checkbox" name="q5" value="2"><span><b>C.</b>运行过程中确实需要切换做法</span></label><label class="option"><input type="checkbox" name="q5" value="3"><span><b>D.</b>只是希望类图看起来更复杂</span></label></div></fieldset><div id="feedback-5" class="feedback" hidden></div></section><section class="question" id="q7" aria-label="第 7 题"><div class="q-meta"><b class="q-no">QUESTION 07</b><span>单选题</span><span>10 分</span><span>代码追踪</span></div><fieldset><legend>以下代码的两行输出分别是什么？</legend><pre><code>def normal(weight):
+    return weight * 2
+
+
+def express(weight):
+    return weight * 4
+
+
+ship = normal
+print(ship(3))
+ship = express
+print(ship(3))</code></pre><div class="options"><label class="option"><input type="radio" name="q6" value="0"><span><b>A.</b>6，然后 6</span></label><label class="option"><input type="radio" name="q6" value="1"><span><b>B.</b>12，然后 12</span></label><label class="option"><input type="radio" name="q6" value="2"><span><b>C.</b>6，然后 12</span></label><label class="option"><input type="radio" name="q6" value="3"><span><b>D.</b>第一次调用就报错</span></label></div></fieldset><div id="feedback-6" class="feedback" hidden></div></section><section class="question" id="q8" aria-label="第 8 题"><div class="q-meta"><b class="q-no">QUESTION 08</b><span>单选题</span><span>10 分</span><span>函数引用</span></div><fieldset><legend>以下代码执行到最后一行会怎样？注意 fly 与 fly() 的区别。</legend><pre><code>def fly():
+    return &quot;飞行&quot;
+
+
+class Duck:
+    def __init__(self, behavior):
+        self.behavior = behavior
+
+    def perform_fly(self):
+        return self.behavior()
+
+
+duck = Duck(fly())
+print(duck.perform_fly())</code></pre><div class="options"><label class="option"><input type="radio" name="q7" value="0"><span><b>A.</b>输出飞行</span></label><label class="option"><input type="radio" name="q7" value="1"><span><b>B.</b>抛出 TypeError，因为保存的是字符串而非可调用对象</span></label><label class="option"><input type="radio" name="q7" value="2"><span><b>C.</b>自动把字符串还原为函数</span></label><label class="option"><input type="radio" name="q7" value="3"><span><b>D.</b>输出 None</span></label></div></fieldset><div id="feedback-7" class="feedback" hidden></div></section><section class="question" id="q9" aria-label="第 9 题"><div class="q-meta"><b class="q-no">QUESTION 09</b><span>应用题 · 自评</span><span>10 分</span><span>重构练习</span></div><fieldset><legend>下面的结算函数很快要支持更多运费规则。用 Python 改成接收运费函数的写法，并展示普通和加急两种调用。要求：新增规则时不修改 checkout；金额单位均为整数分，weight 为正数。</legend><pre><code>def checkout(goods_cents, weight, mode):
+    if mode == &quot;normal&quot;:
+        fee = weight * 200
+    elif mode == &quot;express&quot;:
+        fee = weight * 400
+    else:
+        raise ValueError(&quot;未知配送方式&quot;)
+    return goods_cents + fee</code></pre><label class="answer-label" for="answer-8">写下你的代码或思路（最多 20,000 字符）</label><textarea id="answer-8" maxlength="20000" spellcheck="false" placeholder="先独立作答，再交卷对照评分要点。"></textarea></fieldset><div id="feedback-8" class="feedback" hidden></div></section><section class="question" id="q10" aria-label="第 10 题"><div class="q-meta"><b class="q-no">QUESTION 10</b><span>应用题 · 自评</span><span>10 分</span><span>取舍与迁移</span></div><fieldset><legend>你接手两个需求：①一个稳定的摄氏度转华氏度公式；②游戏角色可随时在剑、弓之间切换武器。分别判断是否值得引入策略，并说明②中谁持有行为、在哪里切换。</legend><label class="answer-label" for="answer-9">写下你的代码或思路（最多 20,000 字符）</label><textarea id="answer-9" maxlength="20000" spellcheck="false" placeholder="先独立作答，再交卷对照评分要点。"></textarea></fieldset><div id="feedback-9" class="feedback" hidden></div></section><div class="submit-panel"><strong data-progress></strong><div class="controls"><button id="submit" class="primary">交卷并查看解析</button><button id="export">导出作答（.md）</button><button id="reset">清空本章重做</button></div><div class="status" id="status" role="status"></div><p class="small">可导出你的作答文件，之后用于复习或逐题批改。导出文件不包含标准答案。</p></div><nav class="bottom-nav"><a href="讲解.html">← 回到本章讲解</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html">下一章测验 →</a></nav><p class="footer">题目依据已完成的第 1—5 章讲解编写。分数用于定位薄弱点，主观题允许满足约定的其他正确解法。</p></main></div><script type="application/json" id="quiz-data">{"folder": "第1章设计模式介绍", "name": "策略模式", "focus": "能否识别独立变化的行为，并通过组合替换它", "questions": [{"type": "single", "skill": "模式识别", "section": 1, "prompt": "结算系统支持普通、加急、自提三种运费算法，运行时按订单选择。最直接匹配哪个模式？", "options": ["观察者：通知所有算法", "策略：替换运费计算行为", "单件：只能存在一种算法", "装饰者：必须把三种算法逐层包装"], "answer": [1], "explanation": "三种做法解决同一个问题，输入输出约定一致，客户选择其中一种使用。这是策略；不是向所有消费者通知，也不是必须叠加三种费用。"}, {"type": "single", "skill": "变化点", "section": 2, "prompt": "把 fly() 加到 Duck 父类后，橡皮鸭也能飞。最值得先检查的设计问题是什么？", "options": ["方法名太短", "子类太少，应为每个对象建一个子类", "Python 不支持面向对象", "易变能力被绑定到并不适用所有子类的继承层次"], "answer": [3], "explanation": "飞行能力与鸭子品种并非完全一致，父类改动错误地传播到不该飞的鸭子。优先把这一变化维度拆开，而不是机械增加子类。"}, {"type": "single", "skill": "Python 实现", "section": 3, "prompt": "Python 中，若策略只做一次简单计算且没有内部状态，通常应先采用哪种实现？", "options": ["签名一致的普通函数", "每个函数再包装四层抽象类", "必须使用元类", "必须先定义 Java 式接口类"], "answer": [0], "explanation": "函数是可传递的对象，可以直接充当策略。只有在状态、接口复杂度等真实需求出现时，再考虑策略类或 Protocol 等约定。"}, {"type": "single", "skill": "需求落地", "section": 6, "prompt": "已经使用 shipping(weight) 策略。新增同城配送，下面哪种改动最符合设计意图？", "options": ["在所有订单对象里加入同城配送分支", "让旧策略自动调用所有新策略", "新增同签名策略，并在组装入口选用它", "把所有算法复制到订单基类"], "answer": [2], "explanation": "新增做法应落在新策略和组装入口。入口可以存在选择分支，模式不会消除所有 if；它的收益是让结算流程不必随着算法增加而变化。"}, {"type": "multi", "skill": "组合与共享", "section": 5, "prompt": "关于策略的替换和共享，哪些说法成立？选择所有正确项。", "options": ["无可变状态的行为函数可以被多个客户复用", "策略对象只要叫策略，就一定可以安全共享可变状态", "两组独立行为可以分别组合，不必枚举全部子类组合", "策略模式要求删除程序中的全部继承关系"], "answer": [0, 2], "explanation": "无状态函数易于复用，独立行为适合独立组合。带状态的对象要先确定状态是否应共享；策略也不否定稳定、合理的继承关系。"}, {"type": "multi", "skill": "选型边界", "section": 6, "prompt": "哪些情况构成引入策略的实际理由？选择所有正确项。", "options": ["只有一条稳定的一行计算公式", "多个业务对象反复复制同一组算法分支", "运行过程中确实需要切换做法", "只是希望类图看起来更复杂"], "answer": [1, 2], "explanation": "重复的算法选择和真实的运行时切换需求，可能值得封装策略。一个稳定的小公式通常直接写函数即可，复杂度本身不是收益。"}, {"type": "single", "skill": "代码追踪", "section": 5, "prompt": "以下代码的两行输出分别是什么？", "code": "def normal(weight):\n    return weight * 2\n\n\ndef express(weight):\n    return weight * 4\n\n\nship = normal\nprint(ship(3))\nship = express\nprint(ship(3))", "expected_stdout": "6\n12\n", "options": ["6，然后 6", "12，然后 12", "6，然后 12", "第一次调用就报错"], "answer": [2], "explanation": "ship 起初引用 normal，之后引用 express。替换的是函数引用，调用点 ship(3) 没变。"}, {"type": "single", "skill": "函数引用", "section": 5, "prompt": "以下代码执行到最后一行会怎样？注意 fly 与 fly() 的区别。", "code": "def fly():\n    return \"飞行\"\n\n\nclass Duck:\n    def __init__(self, behavior):\n        self.behavior = behavior\n\n    def perform_fly(self):\n        return self.behavior()\n\n\nduck = Duck(fly())\nprint(duck.perform_fly())", "expected_exception": "TypeError", "options": ["输出飞行", "抛出 TypeError，因为保存的是字符串而非可调用对象", "自动把字符串还原为函数", "输出 None"], "answer": [1], "explanation": "构造参数 fly() 立即执行函数，传入的是字符串。应传入 fly 这个函数对象，随后由 perform_fly 调用。"}, {"type": "case", "skill": "重构练习", "section": 6, "prompt": "下面的结算函数很快要支持更多运费规则。用 Python 改成接收运费函数的写法，并展示普通和加急两种调用。要求：新增规则时不修改 checkout；金额单位均为整数分，weight 为正数。", "code": "def checkout(goods_cents, weight, mode):\n    if mode == \"normal\":\n        fee = weight * 200\n    elif mode == \"express\":\n        fee = weight * 400\n    else:\n        raise ValueError(\"未知配送方式\")\n    return goods_cents + fee", "solution": "把 mode 选择移到组装入口，checkout 只调用传入的函数。若 mode 来自外部输入，入口仍要校验未知值。", "solution_code": "def normal(weight):\n    return weight * 200\n\n\ndef express(weight):\n    return weight * 400\n\n\ndef checkout(goods_cents, weight, shipping):\n    return goods_cents + shipping(weight)\n\n\nassert checkout(1000, 2, normal) == 1400\nassert checkout(1000, 2, express) == 1800", "rubric": ["5 分：checkout 接收并调用统一签名的策略，不再根据 mode 分支。", "5 分：提供两种策略和两次正确调用，指出选择策略仍由入口负责。"]}, {"type": "case", "skill": "取舍与迁移", "section": 7, "prompt": "你接手两个需求：①一个稳定的摄氏度转华氏度公式；②游戏角色可随时在剑、弓之间切换武器。分别判断是否值得引入策略，并说明②中谁持有行为、在哪里切换。", "solution": "①直接用函数表达稳定公式，无需额外策略体系。②角色持有统一约定的攻击行为，剑和弓分别实现它；装备切换时替换引用，角色的 attack 调用逻辑保持不变。若武器有耐久等可变状态，要决定是否每个角色各有实例。", "rubric": ["5 分：对①保持简单，并说明没有实际替换或复用问题。", "5 分：对②明确角色、攻击策略、替换入口三者关系，而不只写出模式名称。"]}], "chapter": 1}</script><script>const data = JSON.parse(document.getElementById('quiz-data').textContent);
+const key = 'headfirst-python-quiz-v1-' + data.chapter;
+const emptyState = () => ({answers: data.questions.map(q => q.type === 'case' ? '' : []), scores: ['', ''], submitted: false});
+let state = emptyState();
+let storageWorks = true;
+try {
+  const saved = JSON.parse(localStorage.getItem(key));
+  if (saved && Array.isArray(saved.answers) && saved.answers.length === 10) {
+    state.answers = saved.answers.map((a, i) => {
+      const q = data.questions[i];
+      if (q.type === 'case') return typeof a === 'string' ? a.slice(0, 20000) : '';
+      if (!Array.isArray(a)) return [];
+      const valid = [...new Set(a.filter(x => Number.isInteger(x) && x >= 0 && x < q.options.length))];
+      return q.type === 'single' ? valid.slice(0, 1) : valid;
+    });
+    state.scores = [0, 1].map(i => ['', '0', '5', '10'].includes(saved.scores?.[i]) ? saved.scores[i] : '');
+    state.submitted = saved.submitted === true;
+  }
+} catch { storageWorks = false; }
+const escapeHtml = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+const letters = values => values.map(x => String.fromCharCode(65 + x)).join('、');
+const codeBlock = text => text ? '<pre><code>' + escapeHtml(text) + '</code></pre>' : '';
+const answered = i => data.questions[i].type === 'case' ? state.answers[i].trim() !== '' : state.answers[i].length > 0;
+const isCorrect = i => state.answers[i].length === data.questions[i].answer.length && data.questions[i].answer.every(x => state.answers[i].includes(x));
+
+function save() {
+  try { localStorage.setItem(key, JSON.stringify(state)); storageWorks = true; }
+  catch { storageWorks = false; }
+  document.getElementById('save-note').textContent = storageWorks
+    ? '作答自动保存在当前浏览器；换浏览器或设备不会同步。'
+    : '当前浏览器无法保存进度，请用“导出作答”保留答案。';
+}
+function summary() {
+  const box = document.getElementById('score-summary');
+  if (!state.submitted) { box.hidden = true; return; }
+  const auto = data.questions.slice(0, 8).reduce((sum, _, i) => sum + (isCorrect(i) ? 10 : 0), 0);
+  let manual = 0, pending = 0;
+  for (let i = 8; i < 10; i++) {
+    if (!answered(i)) continue;
+    const score = state.scores[i - 8];
+    if (score === '') pending++;
+    else manual += Number(score);
+  }
+  const missed = data.questions.slice(0, 8).map((q, i) => ({q, i})).filter(({i}) => !isCorrect(i));
+  const review = missed.length
+    ? '<p>建议回看：' + missed.map(({q, i}) => '<a href="讲解.html#s' + q.section + '">第 ' + (i + 1) + ' 题 · ' + escapeHtml(q.skill) + '</a>').join(' / ') + '</p>'
+    : '<p>客观题全部正确。接下来用两道主观题检查能否独立写出代码、解释设计取舍。</p>';
+  box.innerHTML = '<p class="eyebrow">本次练习结果</p><h2>客观题 ' + auto + ' / 80</h2><p>'
+    + (pending ? '主观题待自评 ' + pending + ' 题；已计主观题 ' + manual + ' / 20。完成自评后显示总分。'
+      : '主观题（自评）' + manual + ' / 20 · 总分 ' + (auto + manual) + ' / 100')
+    + '</p>' + review + '<p class="small">总分含自评分；把错题讲清楚，并能换场景应用，比记住选项更重要。</p>';
+  box.hidden = false;
+}
+function syncProgress() {
+  const count = data.questions.filter((_, i) => answered(i)).length;
+  document.querySelectorAll('[data-progress]').forEach(e => e.textContent = '已作答 ' + count + ' / 10');
+  data.questions.forEach((q, i) => {
+    document.querySelector('[data-jump="' + i + '"]').classList.toggle('done', answered(i));
+    document.getElementById('feedback-' + i).hidden = !state.submitted;
+  });
+  document.getElementById('submit').textContent = state.submitted ? '重新评分' : '交卷并查看解析';
+  summary();
+}
+function grade() {
+  data.questions.forEach((q, i) => {
+    const panel = document.getElementById('feedback-' + i);
+    if (q.type !== 'case') {
+      const ok = isCorrect(i);
+      panel.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+      panel.innerHTML = '<h3>' + (ok ? '答对了 · 10 / 10' : answered(i) ? '需要复习 · 0 / 10' : '未作答 · 0 / 10')
+        + '</h3><p><strong>正确选项：' + letters(q.answer) + '</strong></p><p>' + escapeHtml(q.explanation)
+        + '</p><a href="讲解.html#s' + q.section + '">回看讲解：' + escapeHtml(q.skill) + ' →</a>';
+    } else {
+      const blank = !answered(i);
+      panel.className = 'feedback';
+      panel.innerHTML = '<h3>参考思路与自评 · 10 分</h3><p>' + escapeHtml(q.solution) + '</p>' + codeBlock(q.solution_code)
+        + '<ul>' + q.rubric.map(x => '<li>' + escapeHtml(x) + '</li>').join('') + '</ul>'
+        + '<label class="self-label" for="self-' + i + '">我的自评分 <select id="self-' + i + '" data-self="' + (i - 8) + '" ' + (blank ? 'disabled' : '') + '>'
+        + (blank ? '<option value="0">未作答 · 0 分</option>' : '<option value="">请按要点评分</option><option value="0">0 分 · 两点均未达到</option><option value="5">5 分 · 达到一项</option><option value="10">10 分 · 两项均达到</option>')
+        + '</select></label><p class="small">参考实现不是唯一答案；满足约定且正确的其他写法同样得分。</p><a href="讲解.html#s' + q.section + '">回看讲解 →</a>';
+      const select = panel.querySelector('select');
+      if (!blank) select.value = state.scores[i - 8];
+      select.addEventListener('change', () => { state.scores[i - 8] = select.value; save(); summary(); });
+    }
+  });
+  syncProgress();
+}
+data.questions.forEach((q, i) => {
+  const card = document.getElementById('q' + (i + 1));
+  if (q.type === 'case') {
+    const area = card.querySelector('textarea');
+    area.value = state.answers[i];
+    area.addEventListener('input', () => { state.answers[i] = area.value; state.scores[i - 8] = ''; changed(); });
+  } else {
+    card.querySelectorAll('input').forEach(input => {
+      input.checked = state.answers[i].includes(Number(input.value));
+      input.addEventListener('change', () => {
+        state.answers[i] = [...card.querySelectorAll('input:checked')].map(x => Number(x.value));
+        changed();
+      });
+    });
+  }
+});
+function changed() {
+  if (state.submitted) document.getElementById('status').textContent = '作答已修改，请重新交卷评分。';
+  state.submitted = false;
+  save(); syncProgress();
+}
+document.getElementById('submit').addEventListener('click', () => {
+  state.submitted = true; save(); grade();
+  document.getElementById('status').textContent = '已评分。客观题显示解析，主观题请根据要点自评。';
+  document.getElementById('score-summary').scrollIntoView({block: 'start'});
+});
+document.getElementById('reset').addEventListener('click', () => {
+  state = emptyState();
+  document.querySelectorAll('.question input').forEach(x => x.checked = false);
+  document.querySelectorAll('.question textarea').forEach(x => x.value = '');
+  save(); syncProgress();
+  document.getElementById('status').textContent = '本章作答已清空，可以重新练习。';
+});
+document.getElementById('export').addEventListener('click', () => {
+  let text = '# ' + data.folder + ' · 我的作答\n\n客观题每题 10 分；主观题按参考要点自评。\n\n';
+  for (let i = 0; i < 10; i++) {
+    const q = data.questions[i];
+    text += '## 第 ' + (i + 1) + ' 题 · ' + q.skill + '\n\n' + q.prompt + '\n\n';
+    if (q.code) text += '```python\n' + q.code + '\n```\n\n';
+    if (q.type === 'case') {
+      text += '我的作答：\n\n' + (state.answers[i].trim() || '未作答') + '\n\n';
+      if (state.submitted) text += '自评分：' + (!answered(i) ? '0' : state.scores[i - 8] || '待自评') + ' / 10\n\n';
+    } else {
+      text += q.options.map((o, k) => String.fromCharCode(65 + k) + '. ' + o).join('\n') + '\n\n';
+      text += '我的选择：' + (letters(state.answers[i]) || '未作答') + '\n\n';
+      if (state.submitted) text += '本题得分：' + (isCorrect(i) ? '10' : '0') + ' / 10\n\n';
+    }
+  }
+  const url = URL.createObjectURL(new Blob(['\uFEFF' + text], {type: 'text/markdown;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = url; link.download = data.folder + '-我的作答.md'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+save();
+if (state.submitted) grade();
+else syncProgress();
+</script></body></html>

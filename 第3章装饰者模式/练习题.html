@@ -1,0 +1,192 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章装饰者模式 · 章节测验</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+
+
+.quiz-intro{background:#e8ede4;padding:18px 22px;border:1px solid var(--line);border-radius:12px;font-size:14px;margin:20px 0 28px}.quiz-intro p{margin:5px 0}.quiz-jumps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.quiz-jumps a{display:block;text-align:center;padding:7px 0;background:#fffef9;border:1px solid var(--line);border-radius:7px;text-decoration:none;font:13px/1.7 ui-monospace,monospace}.quiz-jumps a.done{background:#216c53;color:white;border-color:#216c53}.quiz-progress{font-size:13px;margin:15px 0;color:var(--green);font-weight:700}.question{margin:25px 0 30px;background:var(--white);border:1px solid var(--line);border-radius:13px;padding:24px;scroll-margin-top:30px}.q-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:15px}.q-meta b{color:var(--green);font-family:monospace}.question fieldset{border:0;margin:0;padding:0;min-width:0}.question legend{font-weight:650;font-size:17px;line-height:1.8;padding:0;width:100%}.question pre{margin:18px 0;border-radius:9px;font-size:13px;max-height:none}.question pre code{white-space:pre;overflow-wrap:normal}.options{display:grid;gap:10px;margin-top:18px}.option{display:flex;align-items:flex-start;gap:12px;border:1px solid var(--line);border-radius:9px;padding:12px 15px;cursor:pointer;font-size:14px;line-height:1.7}.option:hover{background:#f1f4ed}.option:has(input:checked){border-color:var(--green);background:#e8f1e5}.option input{width:17px;height:17px;flex:none;margin:4px 0 0;accent-color:var(--green)}.option b{margin-right:8px}.question textarea{display:block;width:100%;min-height:190px;resize:vertical;padding:15px;border:1px solid var(--line);border-radius:9px;background:#fbfcf8;font:14px/1.8 Consolas,'Microsoft YaHei',monospace;color:var(--ink);margin-top:14px}.answer-label{display:block;font-size:12px;color:var(--muted);margin-top:17px}.feedback{margin-top:20px;border-top:1px solid var(--line);padding:20px 0 0;font-size:14px}.feedback h3{font-size:15px;margin:0 0 12px;color:var(--green)}.feedback p{margin:10px 0}.feedback.incorrect h3{color:#9a421e}.feedback ul{padding-left:22px}.feedback a{font-size:13px}.self-label{display:flex;align-items:center;gap:12px;margin:18px 0;font-size:13px}.self-label select{max-width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font:inherit}.score-summary{scroll-margin-top:28px;border:1px solid #aac9b7;background:#e5efe3;border-radius:13px;padding:24px;margin:28px 0}.score-summary h2{font-size:29px;margin:4px 0}.score-summary p{font-size:14px}.score-summary .small{font-size:12px}.submit-panel{padding:24px;background:#e8ede4;border-radius:12px}.submit-panel .controls{margin:15px 0}.primary{background:var(--green);border-color:var(--green);color:white;font-weight:700}.primary:hover{background:#18513f}.question textarea:focus{outline:2px solid var(--green);outline-offset:2px}.status{font-size:13px;color:var(--green);min-height:24px}.save-note{font-size:11px;color:var(--muted)}.quiz-main .hero h1{font-size:42px}.quiz-main .hero{padding-right:60px}.mobile-progress{display:none}.quiz-main .intro{margin-bottom:20px}.question .q-no{letter-spacing:.1em}.bottom-nav a{max-width:48%}
+@media(max-width:680px){.question{padding:18px 15px}.question legend{font-size:16px}.option{padding:11px 10px;font-size:13px}.quiz-main .hero h1{font-size:31px}.quiz-main .hero{padding-right:42px}.quiz-intro{padding:14px 16px;font-size:13px}.self-label{flex-wrap:wrap}.quiz-jumps{margin:13px 0}.sidebar .quiz-progress{display:none}.mobile-progress{display:block;font-size:12px;color:var(--green);margin-top:14px}.score-summary{padding:18px}.score-summary h2{font-size:24px}.submit-panel{padding:18px}.feedback{font-size:13px}.question pre{padding:13px}.question textarea{font-size:13px}}
+@media print{.sidebar,.topbar,.actions,.submit-panel,.bottom-nav,.mobile-progress{display:none}.question{break-inside:auto;padding:14px}.option{padding:6px}.question textarea{min-height:110px}.feedback[hidden]{display:none!important}.hero-number{display:none}.quiz-main .hero h1{font-size:25px}}
+</style></head><body><a class="skip" href="#main">跳到题目</a><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>PYTHON 实践版 · 章节测验</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章练习</p><nav class="chapter-list" aria-label="章节测验"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" class="active" aria-current="page"><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">题目定位</p><nav class="quiz-jumps" aria-label="题目定位"><a href="#q1" data-jump="0" aria-label="第 1 题">01</a><a href="#q2" data-jump="1" aria-label="第 2 题">02</a><a href="#q3" data-jump="2" aria-label="第 3 题">03</a><a href="#q4" data-jump="3" aria-label="第 4 题">04</a><a href="#q5" data-jump="4" aria-label="第 5 题">05</a><a href="#q6" data-jump="5" aria-label="第 6 题">06</a><a href="#q7" data-jump="6" aria-label="第 7 题">07</a><a href="#q8" data-jump="7" aria-label="第 8 题">08</a><a href="#q9" data-jump="8" aria-label="第 9 题">09</a><a href="#q10" data-jump="9" aria-label="第 10 题">10</a></nav><p class="quiz-progress" data-progress></p><p class="side-note">8 道客观题 · 自动判分<br>2 道应用题 · 按要点自评<br>建议 20—30 分钟独立完成</p><a href="讲解.html">← 返回本章讲解</a></aside><main id="main" class="main quiz-main"><div class="hero"><p class="eyebrow">CHAPTER 03 / 检验理解与应用</p><span class="hero-number" aria-hidden="true">03</span><h1>装饰者模式<br>你能独立解决了吗？</h1><p class="intro">能否顺着包装链解释行为，并判断叠加顺序。先作答，再看解析。</p><div class="meta"><span class="tag">10 道题 / 100 分</span><span class="tag">Python 3.10+</span><span class="tag">离线可用</span></div></div><div class="actions"><a href="讲解.html">返回讲解 ↗</a><a href="%E7%BB%83%E4%B9%A0%E9%A2%98.md">Markdown 题稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py">查看本章示例 ↗</a></div><div class="quiz-intro"><p><strong>评分规则：</strong>每题 10 分。单选题选一项；多选题全部选对才得分，漏选、多选均为 0 分。未作答为 0 分。</p><p>第 9—10 题按两条要点自评，每条 5 分。交卷后才显示答案；修改作答后需要重新交卷。</p><p class="save-note" id="save-note">正在读取作答进度…</p></div><p class="mobile-progress" data-progress></p><div class="score-summary" id="score-summary" aria-live="polite" hidden></div><section class="question" id="q1" aria-label="第 1 题"><div class="q-meta"><b class="q-no">QUESTION 01</b><span>单选题</span><span>10 分</span><span>核心结构</span></div><fieldset><legend>一个对象要作为饮料装饰者，最关键的结构是什么？</legend><div class="options"><label class="option"><input type="radio" name="q0" value="0"><span><b>A.</b>必须使用 Python 的 @ 语法</span></label><label class="option"><input type="radio" name="q0" value="1"><span><b>B.</b>只改变被包装对象的类名</span></label><label class="option"><input type="radio" name="q0" value="2"><span><b>C.</b>持有饮料对象，满足相同使用接口，并委托后扩展行为</span></label><label class="option"><input type="radio" name="q0" value="3"><span><b>D.</b>继承所有已有饮料类</span></label></div></fieldset><div id="feedback-0" class="feedback" hidden></div></section><section class="question" id="q2" aria-label="第 2 题"><div class="q-meta"><b class="q-no">QUESTION 02</b><span>单选题</span><span>10 分</span><span>开放关闭</span></div><fieldset><legend>新增焦糖配料时，下列哪种改动最符合装饰者的目标？</legend><div class="options"><label class="option"><input type="radio" name="q1" value="0"><span><b>A.</b>修改每一种基础咖啡的 cost</span></label><label class="option"><input type="radio" name="q1" value="1"><span><b>B.</b>增加焦糖包装类，并在下单入口组合它</span></label><label class="option"><input type="radio" name="q1" value="2"><span><b>C.</b>在所有旧配料中新增焦糖判断</span></label><label class="option"><input type="radio" name="q1" value="3"><span><b>D.</b>为所有可能组合分别建立子类</span></label></div></fieldset><div id="feedback-1" class="feedback" hidden></div></section><section class="question" id="q3" aria-label="第 3 题"><div class="q-meta"><b class="q-no">QUESTION 03</b><span>单选题</span><span>10 分</span><span>引用选择</span></div><fieldset><legend>base 是咖啡，drink = Whip(Mocha(base))。结账时调用 base.cost()，最可能的结果是什么？</legend><div class="options"><label class="option"><input type="radio" name="q2" value="0"><span><b>A.</b>自动遍历所有包装层</span></label><label class="option"><input type="radio" name="q2" value="1"><span><b>B.</b>总是抛异常</span></label><label class="option"><input type="radio" name="q2" value="2"><span><b>C.</b>自动找到 drink</span></label><label class="option"><input type="radio" name="q2" value="3"><span><b>D.</b>只得到基础咖啡价格，绕开了配料</span></label></div></fieldset><div id="feedback-2" class="feedback" hidden></div></section><section class="question" id="q4" aria-label="第 4 题"><div class="q-meta"><b class="q-no">QUESTION 04</b><span>单选题</span><span>10 分</span><span>语言与模式</span></div><fieldset><legend>关于 Python 的 @decorator，哪个判断准确？</legend><div class="options"><label class="option"><input type="radio" name="q3" value="0"><span><b>A.</b>@ 是语法机制；它可以实现包装，也可以用于注册等其他工作</span></label><label class="option"><input type="radio" name="q3" value="1"><span><b>B.</b>每个 @ 都是装饰者模式</span></label><label class="option"><input type="radio" name="q3" value="2"><span><b>C.</b>不写 @ 就不可能使用装饰者模式</span></label><label class="option"><input type="radio" name="q3" value="3"><span><b>D.</b>Protocol 会自动为所有方法增加装饰行为</span></label></div></fieldset><div id="feedback-3" class="feedback" hidden></div></section><section class="question" id="q5" aria-label="第 5 题"><div class="q-meta"><b class="q-no">QUESTION 05</b><span>多选题</span><span>10 分</span><span>顺序与接口</span></div><fieldset><legend>关于包装链，哪些说法成立？选择所有正确项。</legend><div class="options"><label class="option"><input type="checkbox" name="q4" value="0"><span><b>A.</b>客户应尽可能依赖共同接口</span></label><label class="option"><input type="checkbox" name="q4" value="1"><span><b>B.</b>任何装饰者交换顺序都不改变结果</span></label><label class="option"><input type="checkbox" name="q4" value="2"><span><b>C.</b>固定加价和打折交换顺序可能改变总价</span></label><label class="option"><input type="checkbox" name="q4" value="3"><span><b>D.</b>同一种装饰者可以重复包装，只要业务允许</span></label></div></fieldset><div id="feedback-4" class="feedback" hidden></div></section><section class="question" id="q6" aria-label="第 6 题"><div class="q-meta"><b class="q-no">QUESTION 06</b><span>多选题</span><span>10 分</span><span>实际代价</span></div><fieldset><legend>哪些情况意味着要谨慎使用装饰者？选择所有正确项。</legend><div class="options"><label class="option"><input type="checkbox" name="q5" value="0"><span><b>A.</b>客户可以完全通过公共接口工作</span></label><label class="option"><input type="checkbox" name="q5" value="1"><span><b>B.</b>很多功能互斥，必须频繁窥探链条里还有谁</span></label><label class="option"><input type="checkbox" name="q5" value="2"><span><b>C.</b>需求仅仅是几项数据求和，普通列表已经清楚</span></label><label class="option"><input type="checkbox" name="q5" value="3"><span><b>D.</b>可选能力能独立叠加</span></label></div></fieldset><div id="feedback-5" class="feedback" hidden></div></section><section class="question" id="q7" aria-label="第 7 题"><div class="q-meta"><b class="q-no">QUESTION 07</b><span>单选题</span><span>10 分</span><span>调用顺序</span></div><fieldset><legend>以下金额单位为分。两次打印分别得到多少？</legend><pre><code>class Coffee:
+    def cost(self):
+        return 100
+
+
+class AddTen:
+    def __init__(self, inner):
+        self.inner = inner
+
+    def cost(self):
+        return self.inner.cost() + 10
+
+
+class Half:
+    def __init__(self, inner):
+        self.inner = inner
+
+    def cost(self):
+        return self.inner.cost() // 2
+
+
+print(Half(AddTen(Coffee())).cost())
+print(AddTen(Half(Coffee())).cost())</code></pre><div class="options"><label class="option"><input type="radio" name="q6" value="0"><span><b>A.</b>55，然后 55</span></label><label class="option"><input type="radio" name="q6" value="1"><span><b>B.</b>60，然后 55</span></label><label class="option"><input type="radio" name="q6" value="2"><span><b>C.</b>60，然后 60</span></label><label class="option"><input type="radio" name="q6" value="3"><span><b>D.</b>55，然后 60</span></label></div></fieldset><div id="feedback-6" class="feedback" hidden></div></section><section class="question" id="q8" aria-label="第 8 题"><div class="q-meta"><b class="q-no">QUESTION 08</b><span>单选题</span><span>10 分</span><span>对象关系</span></div><fieldset><legend>下面代码会打印什么？</legend><pre><code>class Coffee:
+    def cost(self):
+        return 100
+
+
+class Milk:
+    def __init__(self, inner):
+        self.inner = inner
+
+    def cost(self):
+        return self.inner.cost() + 20
+
+
+base = Coffee()
+drink = Milk(base)
+print(base.cost(), drink.cost(), isinstance(drink, Coffee))</code></pre><div class="options"><label class="option"><input type="radio" name="q7" value="0"><span><b>A.</b>120 120 True</span></label><label class="option"><input type="radio" name="q7" value="1"><span><b>B.</b>100 120 False</span></label><label class="option"><input type="radio" name="q7" value="2"><span><b>C.</b>100 100 True</span></label><label class="option"><input type="radio" name="q7" value="3"><span><b>D.</b>无法运行，Milk 必须继承 Coffee</span></label></div></fieldset><div id="feedback-7" class="feedback" hidden></div></section><section class="question" id="q9" aria-label="第 9 题"><div class="q-meta"><b class="q-no">QUESTION 09</b><span>应用题 · 自评</span><span>10 分</span><span>实现扩展</span></div><fieldset><legend>使用本章示例中的 Beverage、Espresso、Whip，增加每份加收 250 分的 Soy 豆奶装饰者。组合浓缩咖啡、双份豆奶、奶泡，检查总价为 2500 分，描述中出现两次豆奶。不要修改旧类。</legend><label class="answer-label" for="answer-8">写下你的代码或思路（最多 20,000 字符）</label><textarea id="answer-8" maxlength="20000" spellcheck="false" placeholder="先独立作答，再交卷对照评分要点。"></textarea></fieldset><div id="feedback-8" class="feedback" hidden></div></section><section class="question" id="q10" aria-label="第 10 题"><div class="q-meta"><b class="q-no">QUESTION 10</b><span>应用题 · 自评</span><span>10 分</span><span>状态传播</span></div><fieldset><legend>大杯咖啡包了两层配料，但配料层各自默认 size=&#x27;small&#x27;，结果按小杯收费。你会把杯型存在哪里、包装层怎样获取？若客户可通过外层改变杯型，还要明确什么？</legend><label class="answer-label" for="answer-9">写下你的代码或思路（最多 20,000 字符）</label><textarea id="answer-9" maxlength="20000" spellcheck="false" placeholder="先独立作答，再交卷对照评分要点。"></textarea></fieldset><div id="feedback-9" class="feedback" hidden></div></section><div class="submit-panel"><strong data-progress></strong><div class="controls"><button id="submit" class="primary">交卷并查看解析</button><button id="export">导出作答（.md）</button><button id="reset">清空本章重做</button></div><div class="status" id="status" role="status"></div><p class="small">可导出你的作答文件，之后用于复习或逐题批改。导出文件不包含标准答案。</p></div><nav class="bottom-nav"><a href="讲解.html">← 回到本章讲解</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E7%BB%83%E4%B9%A0%E9%A2%98.html">下一章测验 →</a></nav><p class="footer">题目依据已完成的第 1—5 章讲解编写。分数用于定位薄弱点，主观题允许满足约定的其他正确解法。</p></main></div><script type="application/json" id="quiz-data">{"folder": "第3章装饰者模式", "name": "装饰者模式", "focus": "能否顺着包装链解释行为，并判断叠加顺序", "questions": [{"type": "single", "skill": "核心结构", "section": 3, "prompt": "一个对象要作为饮料装饰者，最关键的结构是什么？", "options": ["必须使用 Python 的 @ 语法", "只改变被包装对象的类名", "持有饮料对象，满足相同使用接口，并委托后扩展行为", "继承所有已有饮料类"], "answer": [2], "explanation": "共同接口保证客户可以继续把它当饮料使用，持有内部对象实现组合，通过委托叠加行为。@ 不是必要条件。"}, {"type": "single", "skill": "开放关闭", "section": 7, "prompt": "新增焦糖配料时，下列哪种改动最符合装饰者的目标？", "options": ["修改每一种基础咖啡的 cost", "增加焦糖包装类，并在下单入口组合它", "在所有旧配料中新增焦糖判断", "为所有可能组合分别建立子类"], "answer": [1], "explanation": "新功能放在新包装类里，基础组件和既有装饰者可以保持稳定。组装入口需要选用新类，是正常的扩展工作。"}, {"type": "single", "skill": "引用选择", "section": 5, "prompt": "base 是咖啡，drink = Whip(Mocha(base))。结账时调用 base.cost()，最可能的结果是什么？", "options": ["自动遍历所有包装层", "总是抛异常", "自动找到 drink", "只得到基础咖啡价格，绕开了配料"], "answer": [3], "explanation": "base 没有指向外层包装的引用，不会知道后来包了什么。客户要通过最外层 drink 访问完整增强行为。"}, {"type": "single", "skill": "语言与模式", "section": 6, "prompt": "关于 Python 的 @decorator，哪个判断准确？", "options": ["@ 是语法机制；它可以实现包装，也可以用于注册等其他工作", "每个 @ 都是装饰者模式", "不写 @ 就不可能使用装饰者模式", "Protocol 会自动为所有方法增加装饰行为"], "answer": [0], "explanation": "语言语法与设计模式不是同一个概念。模式是否成立，要看共同接口、对象包装和委托扩展这些关系。"}, {"type": "multi", "skill": "顺序与接口", "section": 5, "prompt": "关于包装链，哪些说法成立？选择所有正确项。", "options": ["客户应尽可能依赖共同接口", "任何装饰者交换顺序都不改变结果", "固定加价和打折交换顺序可能改变总价", "同一种装饰者可以重复包装，只要业务允许"], "answer": [0, 2, 3], "explanation": "同接口让客户不必认识具体外层类型。加法配料顺序可能不影响价格，但折扣和固定费用通常不满足交换律；重复包装是否允许由业务规则决定。"}, {"type": "multi", "skill": "实际代价", "section": 7, "prompt": "哪些情况意味着要谨慎使用装饰者？选择所有正确项。", "options": ["客户可以完全通过公共接口工作", "很多功能互斥，必须频繁窥探链条里还有谁", "需求仅仅是几项数据求和，普通列表已经清楚", "可选能力能独立叠加"], "answer": [1, 2], "explanation": "大量跨层约束会增加组装与验证复杂度；纯数据求和也未必值得建一组包装类。公共接口稳定、能力独立叠加，才是较合适的场景。"}, {"type": "single", "skill": "调用顺序", "section": 5, "prompt": "以下金额单位为分。两次打印分别得到多少？", "code": "class Coffee:\n    def cost(self):\n        return 100\n\n\nclass AddTen:\n    def __init__(self, inner):\n        self.inner = inner\n\n    def cost(self):\n        return self.inner.cost() + 10\n\n\nclass Half:\n    def __init__(self, inner):\n        self.inner = inner\n\n    def cost(self):\n        return self.inner.cost() // 2\n\n\nprint(Half(AddTen(Coffee())).cost())\nprint(AddTen(Half(Coffee())).cost())", "expected_stdout": "55\n60\n", "options": ["55，然后 55", "60，然后 55", "60，然后 60", "55，然后 60"], "answer": [3], "explanation": "第一种先加 10 再除以 2：(100+10)//2=55。第二种先折半再加 10：100//2+10=60。先画出内外层，再沿返回方向计算。"}, {"type": "single", "skill": "对象关系", "section": 5, "prompt": "下面代码会打印什么？", "code": "class Coffee:\n    def cost(self):\n        return 100\n\n\nclass Milk:\n    def __init__(self, inner):\n        self.inner = inner\n\n    def cost(self):\n        return self.inner.cost() + 20\n\n\nbase = Coffee()\ndrink = Milk(base)\nprint(base.cost(), drink.cost(), isinstance(drink, Coffee))", "expected_stdout": "100 120 False\n", "options": ["120 120 True", "100 120 False", "100 100 True", "无法运行，Milk 必须继承 Coffee"], "answer": [1], "explanation": "包装没有改动 base 的价格，外层 drink 的实际类型是 Milk。Python 可以通过共同方法约定使用对象，不要求显式继承 Coffee。"}, {"type": "case", "skill": "实现扩展", "section": 8, "prompt": "使用本章示例中的 Beverage、Espresso、Whip，增加每份加收 250 分的 Soy 豆奶装饰者。组合浓缩咖啡、双份豆奶、奶泡，检查总价为 2500 分，描述中出现两次豆奶。不要修改旧类。", "solution": "Soy 应持有内部 Beverage，并将描述与价格委托后增强；双份豆奶需要包装两次。以下代码与本章示例一同使用。", "solution_code": "from dataclasses import dataclass\n\n\n@dataclass(frozen=True)\nclass Soy:\n    beverage: Beverage\n\n    def description(self):\n        return self.beverage.description() + \" + 豆奶\"\n\n    def cost(self):\n        return self.beverage.cost() + 250\n\n\ndrink = Whip(Soy(Soy(Espresso())))\nassert drink.cost() == 2500\nassert drink.description().count(\"豆奶\") == 2", "needs_demo": true, "rubric": ["5 分：持有内部对象，description 与 cost 都按相同接口委托并增强。", "5 分：正确组合双份豆奶和最外层奶泡，检查 2500 分和两份描述，未修改已有类。"]}, {"type": "case", "skill": "状态传播", "section": 7, "prompt": "大杯咖啡包了两层配料，但配料层各自默认 size='small'，结果按小杯收费。你会把杯型存在哪里、包装层怎样获取？若客户可通过外层改变杯型，还要明确什么？", "solution": "可以让基础饮料持有杯型，包装层读取时统一委托内部对象，沿链取得同一来源的值，而不是每层维护相互独立的默认值。若允许修改，要定义 set_size 是否沿链转发到基础饮料，或把杯型设为构造时确定的不可变值，并据此验证计费。", "rubric": ["5 分：给出单一可信的杯型来源，包装层读取转发，避免多份默认值。", "5 分：明确修改路径或不可变方案，并解释其如何保持配料计费一致。"]}], "chapter": 3}</script><script>const data = JSON.parse(document.getElementById('quiz-data').textContent);
+const key = 'headfirst-python-quiz-v1-' + data.chapter;
+const emptyState = () => ({answers: data.questions.map(q => q.type === 'case' ? '' : []), scores: ['', ''], submitted: false});
+let state = emptyState();
+let storageWorks = true;
+try {
+  const saved = JSON.parse(localStorage.getItem(key));
+  if (saved && Array.isArray(saved.answers) && saved.answers.length === 10) {
+    state.answers = saved.answers.map((a, i) => {
+      const q = data.questions[i];
+      if (q.type === 'case') return typeof a === 'string' ? a.slice(0, 20000) : '';
+      if (!Array.isArray(a)) return [];
+      const valid = [...new Set(a.filter(x => Number.isInteger(x) && x >= 0 && x < q.options.length))];
+      return q.type === 'single' ? valid.slice(0, 1) : valid;
+    });
+    state.scores = [0, 1].map(i => ['', '0', '5', '10'].includes(saved.scores?.[i]) ? saved.scores[i] : '');
+    state.submitted = saved.submitted === true;
+  }
+} catch { storageWorks = false; }
+const escapeHtml = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+const letters = values => values.map(x => String.fromCharCode(65 + x)).join('、');
+const codeBlock = text => text ? '<pre><code>' + escapeHtml(text) + '</code></pre>' : '';
+const answered = i => data.questions[i].type === 'case' ? state.answers[i].trim() !== '' : state.answers[i].length > 0;
+const isCorrect = i => state.answers[i].length === data.questions[i].answer.length && data.questions[i].answer.every(x => state.answers[i].includes(x));
+
+function save() {
+  try { localStorage.setItem(key, JSON.stringify(state)); storageWorks = true; }
+  catch { storageWorks = false; }
+  document.getElementById('save-note').textContent = storageWorks
+    ? '作答自动保存在当前浏览器；换浏览器或设备不会同步。'
+    : '当前浏览器无法保存进度，请用“导出作答”保留答案。';
+}
+function summary() {
+  const box = document.getElementById('score-summary');
+  if (!state.submitted) { box.hidden = true; return; }
+  const auto = data.questions.slice(0, 8).reduce((sum, _, i) => sum + (isCorrect(i) ? 10 : 0), 0);
+  let manual = 0, pending = 0;
+  for (let i = 8; i < 10; i++) {
+    if (!answered(i)) continue;
+    const score = state.scores[i - 8];
+    if (score === '') pending++;
+    else manual += Number(score);
+  }
+  const missed = data.questions.slice(0, 8).map((q, i) => ({q, i})).filter(({i}) => !isCorrect(i));
+  const review = missed.length
+    ? '<p>建议回看：' + missed.map(({q, i}) => '<a href="讲解.html#s' + q.section + '">第 ' + (i + 1) + ' 题 · ' + escapeHtml(q.skill) + '</a>').join(' / ') + '</p>'
+    : '<p>客观题全部正确。接下来用两道主观题检查能否独立写出代码、解释设计取舍。</p>';
+  box.innerHTML = '<p class="eyebrow">本次练习结果</p><h2>客观题 ' + auto + ' / 80</h2><p>'
+    + (pending ? '主观题待自评 ' + pending + ' 题；已计主观题 ' + manual + ' / 20。完成自评后显示总分。'
+      : '主观题（自评）' + manual + ' / 20 · 总分 ' + (auto + manual) + ' / 100')
+    + '</p>' + review + '<p class="small">总分含自评分；把错题讲清楚，并能换场景应用，比记住选项更重要。</p>';
+  box.hidden = false;
+}
+function syncProgress() {
+  const count = data.questions.filter((_, i) => answered(i)).length;
+  document.querySelectorAll('[data-progress]').forEach(e => e.textContent = '已作答 ' + count + ' / 10');
+  data.questions.forEach((q, i) => {
+    document.querySelector('[data-jump="' + i + '"]').classList.toggle('done', answered(i));
+    document.getElementById('feedback-' + i).hidden = !state.submitted;
+  });
+  document.getElementById('submit').textContent = state.submitted ? '重新评分' : '交卷并查看解析';
+  summary();
+}
+function grade() {
+  data.questions.forEach((q, i) => {
+    const panel = document.getElementById('feedback-' + i);
+    if (q.type !== 'case') {
+      const ok = isCorrect(i);
+      panel.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+      panel.innerHTML = '<h3>' + (ok ? '答对了 · 10 / 10' : answered(i) ? '需要复习 · 0 / 10' : '未作答 · 0 / 10')
+        + '</h3><p><strong>正确选项：' + letters(q.answer) + '</strong></p><p>' + escapeHtml(q.explanation)
+        + '</p><a href="讲解.html#s' + q.section + '">回看讲解：' + escapeHtml(q.skill) + ' →</a>';
+    } else {
+      const blank = !answered(i);
+      panel.className = 'feedback';
+      panel.innerHTML = '<h3>参考思路与自评 · 10 分</h3><p>' + escapeHtml(q.solution) + '</p>' + codeBlock(q.solution_code)
+        + '<ul>' + q.rubric.map(x => '<li>' + escapeHtml(x) + '</li>').join('') + '</ul>'
+        + '<label class="self-label" for="self-' + i + '">我的自评分 <select id="self-' + i + '" data-self="' + (i - 8) + '" ' + (blank ? 'disabled' : '') + '>'
+        + (blank ? '<option value="0">未作答 · 0 分</option>' : '<option value="">请按要点评分</option><option value="0">0 分 · 两点均未达到</option><option value="5">5 分 · 达到一项</option><option value="10">10 分 · 两项均达到</option>')
+        + '</select></label><p class="small">参考实现不是唯一答案；满足约定且正确的其他写法同样得分。</p><a href="讲解.html#s' + q.section + '">回看讲解 →</a>';
+      const select = panel.querySelector('select');
+      if (!blank) select.value = state.scores[i - 8];
+      select.addEventListener('change', () => { state.scores[i - 8] = select.value; save(); summary(); });
+    }
+  });
+  syncProgress();
+}
+data.questions.forEach((q, i) => {
+  const card = document.getElementById('q' + (i + 1));
+  if (q.type === 'case') {
+    const area = card.querySelector('textarea');
+    area.value = state.answers[i];
+    area.addEventListener('input', () => { state.answers[i] = area.value; state.scores[i - 8] = ''; changed(); });
+  } else {
+    card.querySelectorAll('input').forEach(input => {
+      input.checked = state.answers[i].includes(Number(input.value));
+      input.addEventListener('change', () => {
+        state.answers[i] = [...card.querySelectorAll('input:checked')].map(x => Number(x.value));
+        changed();
+      });
+    });
+  }
+});
+function changed() {
+  if (state.submitted) document.getElementById('status').textContent = '作答已修改，请重新交卷评分。';
+  state.submitted = false;
+  save(); syncProgress();
+}
+document.getElementById('submit').addEventListener('click', () => {
+  state.submitted = true; save(); grade();
+  document.getElementById('status').textContent = '已评分。客观题显示解析，主观题请根据要点自评。';
+  document.getElementById('score-summary').scrollIntoView({block: 'start'});
+});
+document.getElementById('reset').addEventListener('click', () => {
+  state = emptyState();
+  document.querySelectorAll('.question input').forEach(x => x.checked = false);
+  document.querySelectorAll('.question textarea').forEach(x => x.value = '');
+  save(); syncProgress();
+  document.getElementById('status').textContent = '本章作答已清空，可以重新练习。';
+});
+document.getElementById('export').addEventListener('click', () => {
+  let text = '# ' + data.folder + ' · 我的作答\n\n客观题每题 10 分；主观题按参考要点自评。\n\n';
+  for (let i = 0; i < 10; i++) {
+    const q = data.questions[i];
+    text += '## 第 ' + (i + 1) + ' 题 · ' + q.skill + '\n\n' + q.prompt + '\n\n';
+    if (q.code) text += '```python\n' + q.code + '\n```\n\n';
+    if (q.type === 'case') {
+      text += '我的作答：\n\n' + (state.answers[i].trim() || '未作答') + '\n\n';
+      if (state.submitted) text += '自评分：' + (!answered(i) ? '0' : state.scores[i - 8] || '待自评') + ' / 10\n\n';
+    } else {
+      text += q.options.map((o, k) => String.fromCharCode(65 + k) + '. ' + o).join('\n') + '\n\n';
+      text += '我的选择：' + (letters(state.answers[i]) || '未作答') + '\n\n';
+      if (state.submitted) text += '本题得分：' + (isCorrect(i) ? '10' : '0') + ' / 10\n\n';
+    }
+  }
+  const url = URL.createObjectURL(new Blob(['\uFEFF' + text], {type: 'text/markdown;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = url; link.download = data.folder + '-我的作答.md'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+save();
+if (state.submitted) grade();
+else syncProgress();
+</script></body></html>

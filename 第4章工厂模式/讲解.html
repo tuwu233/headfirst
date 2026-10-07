@@ -1,0 +1,286 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="用一个比萨店，分清集中创建、子类创建，以及成套产品的创建。"><title>第4章工厂模式 · Python 实践讲解</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><div class="progress" aria-hidden="true"></div><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>01 — 05 · PYTHON 实践版 · 离线可读</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章学习路径</p><nav class="chapter-list" aria-label="章节切换"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html" ><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" class="active" aria-current="page"><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">本章目录</p><nav class="toc" aria-label="本章目录"><a href="#s1">1. 先理解共同问题：谁负责创建对象</a><a href="#s2">2. 先分清三种写法，再背名字</a><a href="#s3">3. 书中的演进，为什么一步步引入工厂</a><a href="#s4">4. 完整 Python 示例：一次运行，对照三种创建方式</a><a href="#s5">5. 跟踪一次调用：哪个方法真的发生了替换</a><a href="#s6">6. 依赖倒置：业务流程朝什么方向依赖</a><a href="#s7">7. 新需求来了，究竟改哪里</a><a href="#s8">8. 五分钟练习：新增杭州原料家族</a><a href="#s9">9. 一分钟复习与原书定位</a></nav><p class="side-note">先理解变化点，再决定模式。<br>所有示例仅使用 Python 标准库。<br>Ctrl + P 可打印含答案的完整讲解。</p></aside><main class="main" id="main"><div class="hero"><p class="eyebrow">CHAPTER 04 / 封装创建</p><span class="hero-number" aria-hidden="true">04</span><h1>创建可以变化，<br>使用流程保持稳定</h1><p class="intro">用一个比萨店，分清集中创建、子类创建，以及成套产品的创建。</p><div class="meta"><span class="tag">工厂模式</span><span class="tag">建议 27 分钟</span><span class="tag">Python 3.10+</span></div></div><div class="actions"><a href="练习题.html">章节测验 · 10 题 →</a><a href="%E8%AE%B2%E8%A7%A3%E7%A8%BF.md">Markdown 讲解稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py" download>下载 Python 示例 ↓</a><a href="%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.pdf">对照原书 PDF ↗</a></div><div class="concepts"><div><b>01</b>简单工厂</div><div><b>02</b>工厂方法</div><div><b>03</b>抽象工厂</div></div><figure class="diagram" aria-label="使用者 / 流程到创建扩展点到具体产品 / 家族"><div class="diagram-flow"><div class="diagram-node">使用者 / 流程</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">创建扩展点</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">具体产品 / 家族</div></div><p>把具体创建放到明确的位置，让业务流程依赖产品约定。</p></figure><section class="lab" aria-label="交互演示"><div class="lab-head"><b>动手看变化</b><span>浏览器演示 · Python 源码见下文</span></div><div class="lab-body"><p class="lab-desc">换一种创建方式，观察“具体选择发生在哪里”。此演示对应下方三段工厂代码。</p><div class="controls"><label>创建方式 <select id="factory"><option value="simple">简单工厂</option><option value="method">工厂方法</option><option value="abstract">抽象工厂</option></select></label><label id="kind-label">产品 <select id="kind"><option value="cheese">芝士比萨</option><option value="veggie">素食比萨</option></select></label><label id="region-label" hidden>地区 <select id="region"><option value="ny">纽约</option><option value="chicago">芝加哥</option></select></label></div><div class="result" id="result" aria-live="polite"></div></div></section><article><blockquote>
+<p>学习目标：清楚区分简单工厂、工厂方法与抽象工厂；面对新地区或新产品，能指出要修改的类，并选用最小的合适方案。</p>
+</blockquote>
+<p>建议用时：速读 12 分钟，运行与练习 15 分钟。本章比前几章长，先读第 1、2、7 节建立区别，再看代码。</p>
+<h2 id="s1">1. 先理解共同问题：谁负责创建对象</h2>
+<p>比萨店有稳定流程：接单 → 创建比萨 → 准备 → 烘焙 → 切片 → 装盒。变化的是卖哪些比萨、不同地区用什么原料。</p>
+<p>如果订单方法到处写具体类型的创建代码，每次增加地区或调整原料，都可能碰到原本稳定的流程。工厂把“创建哪种对象、怎么创建”放到明确的位置，让使用者依赖产品约定。</p>
+<p><strong>工厂没有消灭具体对象，也没有消灭 <code>new</code> 或类调用；它把创建依赖集中起来。</strong> Python 里的 <code>CheesePizza()</code> 与 Java 的 <code>new CheesePizza()</code> 在这个讨论里扮演同样角色。</p>
+<h2 id="s2">2. 先分清三种写法，再背名字</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>决定在哪里</th>
+<th>核心机制</th>
+<th>本书中的例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单工厂</td>
+<td>一个函数或工厂对象的分支里</td>
+<td>集中创建</td>
+<td>按类型返回芝士或素食比萨</td>
+</tr>
+<tr>
+<td>工厂方法</td>
+<td>创建者子类的重写方法里</td>
+<td>继承与多态</td>
+<td>纽约店、芝加哥店各实现 createPizza</td>
+</tr>
+<tr>
+<td>抽象工厂</td>
+<td>传入的一组工厂实现里</td>
+<td>组合与委托</td>
+<td>纽约原料厂、芝加哥原料厂分别供应一整套原料</td>
+</tr>
+</tbody></table></div>
+<p>简单工厂是常用的创建惯用法，不属于 GoF 23 个模式中的独立模式，但它往往已经足够好。<strong>“代码里有个叫 factory 的函数”不代表使用了工厂方法模式。</strong></p>
+<p>工厂方法关注“某个创建步骤由哪个子类实现”；抽象工厂关注“一组需要相互匹配的产品由哪套工厂提供”。不能只靠返回几个对象来判断名称。</p>
+<h2 id="s3">3. 书中的演进，为什么一步步引入工厂</h2>
+<p>第一步，把订单方法里的创建分支搬到简单工厂，订单仍负责烘焙等操作。</p>
+<p>第二步，加盟店要保留当地风味，又要共享总部的制作流程。于是父类保留 <code>order_pizza()</code>，把 <code>create_pizza()</code> 交给地区子类实现。这是工厂方法。调用父类订单方法时，实际运行哪个创建方法，取决于店对象的真实类型。</p>
+<p>第三步，不同地区还要供应匹配的面团和酱料。把这些创建方法组合成 <code>IngredientFactory</code>，比萨只向工厂要原料。这是抽象工厂。纽约厂返回薄饼与番茄酱，芝加哥厂返回厚饼与李子番茄酱。</p>
+<p>两种模式可以同时出现：地区店用工厂方法创建比萨，再把当地原料工厂传给比萨。一个负责创建扩展点，一个负责原料家族。</p>
+<h2 id="s4">4. 完整 Python 示例：一次运行，对照三种创建方式</h2>
+<p>同目录 <a href="%E7%A4%BA%E4%BE%8B.py">示例.py</a>，运行 <code>python 示例.py</code>，要求 Python 3.10+。流程与原料仅做内存模拟，不涉及真实烘焙。</p>
+<p>为了把区别看清楚，三种写法放在同一文件中分别运行。两家原料工厂创建的是两类产品 <code>Dough</code> 和 <code>Sauce</code>；产品用数据表示口味，不必为每个口味再建子类。</p>
+<details class="code-details"><summary>展开完整 Python 示例 · 114 行 · 可复制运行</summary><div class="code-block"><div class="code-top"><span>PYTHON · 114 行</span><button data-copy="code-1" aria-label="复制python代码">复制</button></div><pre><code id="code-1" class="language-python">from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from typing import Protocol
+
+
+@dataclass(frozen=True)
+class Dough:
+    name: str
+
+
+@dataclass(frozen=True)
+class Sauce:
+    name: str
+
+
+@dataclass
+class Pizza:
+    name: str
+    dough: Dough
+    sauce: Sauce
+    steps: list[str] = field(default_factory=list)
+
+
+# 1. 简单工厂：创建选择集中在一个函数中。
+def simple_factory(kind: str) -&gt; Pizza:
+    if kind == &quot;cheese&quot;:
+        return Pizza(&quot;芝士比萨&quot;, Dough(&quot;普通面团&quot;), Sauce(&quot;番茄酱&quot;))
+    if kind == &quot;veggie&quot;:
+        return Pizza(&quot;素食比萨&quot;, Dough(&quot;普通面团&quot;), Sauce(&quot;番茄酱&quot;))
+    raise ValueError(f&quot;不支持的比萨类型：{kind}&quot;)
+
+
+# 2. 工厂方法：子类创建，父类使用产品完成共同流程。
+class PizzaStore(ABC):
+    def order_pizza(self) -&gt; Pizza:
+        pizza = self.create_pizza()
+        pizza.steps.extend([&quot;准备&quot;, &quot;烘焙&quot;, &quot;切片&quot;, &quot;装盒&quot;])
+        return pizza
+
+    @abstractmethod
+    def create_pizza(self) -&gt; Pizza:
+        raise NotImplementedError
+
+
+class NYStore(PizzaStore):
+    def create_pizza(self) -&gt; Pizza:
+        return Pizza(&quot;纽约芝士比萨&quot;, Dough(&quot;薄饼面团&quot;), Sauce(&quot;番茄酱&quot;))
+
+
+class ChicagoStore(PizzaStore):
+    def create_pizza(self) -&gt; Pizza:
+        return Pizza(&quot;芝加哥芝士比萨&quot;, Dough(&quot;厚饼面团&quot;), Sauce(&quot;李子番茄酱&quot;))
+
+
+# 3. 抽象工厂：客户向一个工厂索取相互匹配的产品家族。
+class IngredientFactory(Protocol):
+    def create_dough(self) -&gt; Dough: ...
+    def create_sauce(self) -&gt; Sauce: ...
+
+
+class NYIngredients:
+    def create_dough(self) -&gt; Dough:
+        return Dough(&quot;薄饼面团&quot;)
+
+    def create_sauce(self) -&gt; Sauce:
+        return Sauce(&quot;番茄酱&quot;)
+
+
+class ChicagoIngredients:
+    def create_dough(self) -&gt; Dough:
+        return Dough(&quot;厚饼面团&quot;)
+
+    def create_sauce(self) -&gt; Sauce:
+        return Sauce(&quot;李子番茄酱&quot;)
+
+
+def make_regional_pizza(factory: IngredientFactory) -&gt; Pizza:
+    return Pizza(&quot;地区比萨&quot;, factory.create_dough(), factory.create_sauce())
+
+
+def demo() -&gt; None:
+    simple = simple_factory(&quot;cheese&quot;)
+    veggie = simple_factory(&quot;veggie&quot;)
+    ny = NYStore().order_pizza()
+    chicago = ChicagoStore().order_pizza()
+    family_ny = make_regional_pizza(NYIngredients())
+    family_chicago = make_regional_pizza(ChicagoIngredients())
+    checks = [
+        simple.name == &quot;芝士比萨&quot;,
+        veggie.name == &quot;素食比萨&quot;,
+        ny.name == &quot;纽约芝士比萨&quot;,
+        chicago.name == &quot;芝加哥芝士比萨&quot;,
+        ny.steps == chicago.steps == [&quot;准备&quot;, &quot;烘焙&quot;, &quot;切片&quot;, &quot;装盒&quot;],
+        (family_ny.dough.name, family_ny.sauce.name) == (&quot;薄饼面团&quot;, &quot;番茄酱&quot;),
+        (family_chicago.dough.name, family_chicago.sauce.name)
+        == (&quot;厚饼面团&quot;, &quot;李子番茄酱&quot;),
+    ]
+    if not all(checks):
+        raise AssertionError(&quot;工厂产品或流程不正确&quot;)
+    try:
+        simple_factory(&quot;unknown&quot;)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(&quot;未知类型应该明确失败&quot;)
+    print(&quot;简单工厂：&quot;, simple.name, sep=&quot;&quot;)
+    print(&quot;工厂方法：&quot;, ny.name, &quot; / &quot;, chicago.name, sep=&quot;&quot;)
+    print(&quot;共同流程：&quot;, &quot; → &quot;.join(ny.steps), sep=&quot;&quot;)
+    print(&quot;抽象工厂：&quot;, family_chicago.dough.name, &quot; + &quot;, family_chicago.sauce.name, sep=&quot;&quot;)
+    print(&quot;自检通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre></div></details>
+<p>预期输出：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 5 行</span><button data-copy="code-2" aria-label="复制text代码">复制</button></div><pre><code id="code-2" class="language-text">简单工厂：芝士比萨
+工厂方法：纽约芝士比萨 / 芝加哥芝士比萨
+共同流程：准备 → 烘焙 → 切片 → 装盒
+抽象工厂：厚饼面团 + 李子番茄酱
+自检通过
+</code></pre></div>
+<p>工厂方法示例每店只展示一种比萨，省去类型分支；真实菜单可以给 <code>create_pizza(kind)</code> 传类型，由各店分别决定支持什么，未知类型要明确报错。</p>
+<h2 id="s5">5. 跟踪一次调用：哪个方法真的发生了替换</h2>
+<p>对于 <code>NYStore().order_pizza()</code>：先进入继承来的订单方法 → 调用 <code>self.create_pizza()</code> → 根据 <code>self</code> 的实际类型进入 <code>NYStore</code> 的实现 → 返回 <code>Pizza</code> → 订单方法执行共同流程。</p>
+<p>父类知道的是 <code>Pizza</code> 的能力，不必分支判断纽约或芝加哥。子类负责创建，父类负责使用，这才是本例的工厂方法关系。</p>
+<p>对于 <code>make_regional_pizza(ChicagoIngredients())</code>：函数持有工厂 → 调用 <code>create_dough()</code> 与 <code>create_sauce()</code> → 得到芝加哥的一套原料。更换传入工厂就能更换整套原料，不必修改制作函数。</p>
+<p>抽象工厂把家族一致性的责任集中到具体工厂中，但不会自动验证一切。若芝加哥工厂写错返回了纽约酱料，仍然需要测试发现。</p>
+<h2 id="s6">6. 依赖倒置：业务流程朝什么方向依赖</h2>
+<p>旧结构：<code>订单流程 → 纽约具体比萨 / 芝加哥具体比萨 / 更多具体类</code>。</p>
+<p>改进后：订单流程依赖 <code>Pizza</code> 约定；原料使用者依赖 <code>IngredientFactory</code> 约定；具体实现满足这些约定。高层业务与底层细节围绕共同抽象配合，具体创建集中在工厂或程序组装入口。</p>
+<p>这就是依赖倒置原则在本章的落点：<strong>重要流程依赖稳定的抽象，让容易变化的细节去适配它。</strong></p>
+<p>传入一个工厂对象是依赖注入的一种做法；依赖注入是“如何提供依赖”，依赖倒置是“代码依赖朝什么方向”，两者不要混为同一个概念。</p>
+<p>不需要把每个 <code>list()</code>、<code>dict()</code> 或稳定的数据对象都包进工厂。只有创建规则、具体产品或家族真的变化时，才值得增加这一层。</p>
+<h2 id="s7">7. 新需求来了，究竟改哪里</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>新需求</th>
+<th>简单工厂</th>
+<th>工厂方法</th>
+<th>抽象工厂</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新增一种菜单产品</td>
+<td>通常修改集中分支</td>
+<td>涉及该产品的具体店扩展创建逻辑</td>
+<td>通常可由客户组合已有原料，不一定新增工厂接口</td>
+</tr>
+<tr>
+<td>新增一个地区</td>
+<td>通常扩大分支或配置</td>
+<td>新增地区店子类，共同订单流程不变</td>
+<td>新增地区原料工厂，实现完整家族</td>
+</tr>
+<tr>
+<td>家族增加一种产品类别，如奶酪</td>
+<td>按需求修改函数</td>
+<td>按创建职责变化</td>
+<td>要扩展工厂接口，并更新所有具体工厂及相关客户</td>
+</tr>
+</tbody></table></div>
+<p><strong>抽象工厂擅长增加新家族，不擅长频繁增加家族里的产品类别。</strong> 这是一项真实代价，不是“设计越抽象就越好”。</p>
+<p>选型顺序：一次简单创建直接调用类；创建分支重复时集中成函数；已经存在共享流程与子类扩展点时考虑工厂方法；需要替换整套相关产品时考虑抽象工厂。</p>
+<p>Python 还可以把创建函数作为参数传入使用者，这是一种轻量的创建策略。没有子类重写关系时，不必硬把它叫作本书定义的工厂方法模式。</p>
+<h2 id="s8">8. 五分钟练习：新增杭州原料家族</h2>
+<p>任务：提供“薄脆面团 + 葱香酱”；不得修改 <code>make_regional_pizza()</code>。然后回答：如果每套家族都新增奶酪，要改哪些地方？</p>
+<details>
+<summary>查看参考答案</summary>
+
+<div class="code-block"><div class="code-top"><span>PYTHON · 10 行</span><button data-copy="code-3" aria-label="复制python代码">复制</button></div><pre><code id="code-3" class="language-python">class HangzhouIngredients:
+    def create_dough(self) -&gt; Dough:
+        return Dough(&quot;薄脆面团&quot;)
+
+    def create_sauce(self) -&gt; Sauce:
+        return Sauce(&quot;葱香酱&quot;)
+
+pizza = make_regional_pizza(HangzhouIngredients())
+assert pizza.dough.name == &quot;薄脆面团&quot;
+assert pizza.sauce.name == &quot;葱香酱&quot;
+</code></pre></div>
+<p>新增家族只需新工厂并在入口选用它。新增奶酪这一产品类别，则要增加产品约定、<code>create_cheese()</code> 方法，并更新所有具体工厂和使用奶酪的客户。</p>
+</details>
+
+<details>
+<summary>自测：一个静态 create() 方法，是否就是工厂方法模式？</summary>
+
+<p>不一定。名称和 static 都不能决定模式。要看是否存在创建者抽象、子类重写创建步骤、共同流程通过多态调用该步骤。若只是函数里按字符串分支创建，更接近简单工厂。</p>
+</details>
+
+<h2 id="s9">9. 一分钟复习与原书定位</h2>
+<p><strong>简单工厂：集中创建。工厂方法：子类决定创建。抽象工厂：对象提供一整套相关产品。先找变化在哪，再选结构。</strong></p>
+<p>原书：<a href="%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.pdf">本章 PDF</a>。Python 产品用数据类表示，是讲解简化；保留了创建者扩展点和多产品家族的核心关系。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想补看的内容</th>
+<th>书中印刷页码</th>
+<th>本章 PDF 页码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单工厂与创建封装</td>
+<td>110–119</td>
+<td>2–11</td>
+</tr>
+<tr>
+<td>工厂方法、共同流程与定义</td>
+<td>120–135</td>
+<td>12–27</td>
+</tr>
+<tr>
+<td>依赖倒置及其使用边界</td>
+<td>138–143</td>
+<td>30–35</td>
+</tr>
+<tr>
+<td>原料家族与抽象工厂</td>
+<td>144–157</td>
+<td>36–49</td>
+</tr>
+<tr>
+<td>两种模式的比较</td>
+<td>158–162</td>
+<td>50–54</td>
+</tr>
+</tbody></table></div>
+<p>工厂回答“怎么创建”；下一章进一步追问“是否必须只创建一份”。</p>
+</article><nav class="bottom-nav" aria-label="上下章"><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">← 上一章 · 装饰者模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">下一章 · 单件模式 →</a></nav><footer class="footer">依据本地《Head First 设计模式（第二版）》对应章节重新编写。Python 示例与实践补充见正文。原 PDF 保持不变。</footer></main></div><script>const result=document.getElementById('result');function render(){const type=document.getElementById('factory').value;const ny=document.getElementById('region').value==='ny';document.getElementById('kind-label').hidden=type!=='simple';document.getElementById('region-label').hidden=type==='simple';if(type==='simple'){const kind=document.getElementById('kind').value;result.textContent='simple_factory("'+kind+'") → '+(kind==='cheese'?'芝士比萨':'素食比萨')+'\n选择位置：一个创建函数内的分支。';}else if(type==='method'){result.textContent=(ny?'NYStore':'ChicagoStore')+'.order_pizza()\n→ 子类 create_pizza() → '+(ny?'纽约芝士比萨':'芝加哥芝士比萨')+'\n→ 共用流程：准备 → 烘焙 → 切片 → 装盒';}else{result.textContent='make_regional_pizza('+(ny?'NYIngredients':'ChicagoIngredients')+'())\n→ create_dough()：'+(ny?'薄饼面团':'厚饼面团')+'\n→ create_sauce()：'+(ny?'番茄酱':'李子番茄酱')+'\n选择位置：传入的整套原料工厂。';}}document.querySelectorAll('.lab select').forEach(x=>x.onchange=render);render();
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='已复制';}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(b.dataset.copy));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);b.textContent='已选中，按 Ctrl+C';}}));
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(max>0?scrollY/max*100:0)+'%';};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.querySelectorAll('details').forEach(x=>x.addEventListener('toggle',update));update();
+  let opened=[];addEventListener('beforeprint',()=>{opened=[...document.querySelectorAll('details')].filter(x=>!x.open);opened.forEach(x=>x.open=true);});addEventListener('afterprint',()=>{opened.forEach(x=>x.open=false);});</script></body></html>

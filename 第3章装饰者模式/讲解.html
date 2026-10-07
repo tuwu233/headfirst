@@ -1,0 +1,214 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="从一杯咖啡到双份摩卡加奶泡，接口保持一致，能力按需叠加。"><title>第3章装饰者模式 · Python 实践讲解</title><style>
+[hidden]{display:none!important}
+:root{color-scheme:light;--paper:#f5f4ee;--ink:#20352f;--green:#216c53;--muted:#58675f;--line:#d6ded3;--gold:#dba852;--white:#fffef9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button,select,summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d28c2b;outline-offset:4px}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:8px 14px;line-height:1.5}button:hover{background:#e8eee5}button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.skip{position:absolute;top:-80px;left:20px;z-index:3;background:white;padding:10px}.skip:focus{top:10px}.topbar{border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 4vw;font-size:12px;letter-spacing:.12em}.brand{font-weight:800}.topbar span:last-child{color:var(--muted);letter-spacing:.04em}.layout{max-width:1340px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:54px;padding:36px 40px 60px}.sidebar{position:sticky;top:22px;align-self:start;max-height:calc(100vh - 44px);overflow:auto;font-size:13px;padding-right:14px}.nav-label{font-size:11px;letter-spacing:.18em;color:var(--muted);margin:9px 0 13px}.chapter-list,.toc{display:grid;gap:5px}.chapter-list a{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;line-height:1.5}.chapter-list a span{display:inline-block;font:12px ui-monospace,monospace;margin-right:10px}.chapter-list a.active{background:var(--green);color:white;font-weight:700}.sidebar hr{border:0;border-top:1px solid var(--line);margin:23px 0}.toc a{font-size:12px;text-decoration:none;color:var(--muted);padding:5px 0;line-height:1.7}.toc a:hover{color:var(--green)}.side-note{font-size:11px;color:var(--muted);margin:24px 0}.main{min-width:0;max-width:930px}.eyebrow{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);margin:6px 0 17px}.hero{position:relative;padding-right:82px}.hero-number{position:absolute;right:0;top:-15px;font:500 84px/1.2 Georgia,serif;color:#d5decf}.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.28;letter-spacing:-.05em;margin:0 0 22px;font-weight:750}.intro{font-size:16px;color:var(--muted);max-width:630px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 11px}.actions{display:flex;flex-wrap:wrap;gap:17px;margin:20px 0 30px;font-size:13px}.actions a{font-weight:600}.concepts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 30px}.concepts div{padding:15px 8px;font-size:13px}.concepts b{color:var(--green);font:12px ui-monospace,monospace;margin-right:8px}.diagram{background:#e8ede4;border:1px solid #d8e1d3;border-radius:14px;padding:23px;margin:24px 0}.diagram-flow{display:flex;align-items:center;gap:11px}.diagram-node{flex:1;text-align:center;background:#fffef9;border:1px solid #ced9c8;border-radius:9px;padding:13px 5px;font-weight:650;font-size:13px}.arrow{color:var(--green);font-size:21px}.diagram p{margin:12px 0 0;font-size:12px;color:var(--muted)}.lab{border:1px solid #bfd3c5;background:var(--white);border-radius:14px;overflow:hidden;margin:25px 0 38px}.lab-head{display:flex;justify-content:space-between;gap:12px;background:var(--ink);color:white;padding:14px 22px;font-size:13px}.lab-head span{font-size:11px;color:#cbdacc}.lab-body{padding:21px}.lab-desc{font-size:14px;margin:0 0 17px;color:var(--muted)}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls label{font-size:13px;display:flex;align-items:center;gap:7px}.controls select{max-width:100%;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);padding:7px}.controls input[type=number]{width:90px;border:1px solid var(--line);border-radius:7px;padding:7px}.controls input[type=checkbox]{width:17px;height:17px;accent-color:var(--green)}.result{margin-top:17px;background:#edf2e9;border-left:3px solid var(--green);padding:14px 17px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:66px}.result strong{font-size:23px}.small{font-size:12px;color:var(--muted)}article h2{font-size:24px;line-height:1.45;margin:45px 0 20px;padding-top:22px;border-top:1px solid var(--line);letter-spacing:-.02em}article p{margin:14px 0}article strong{color:#184b36}article blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid var(--gold);background:#fbf2df}article blockquote p{font-size:15px}article ul,article ol{padding-left:26px}article li{padding:4px 0}article code{font:14px/1.7 Consolas,"Microsoft YaHei",monospace;background:#e8ede4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;background:#1f302b;color:#e2efe5;border-radius:0 0 11px 11px;tab-size:4}pre code{font:13px/1.8 Consolas,"Microsoft YaHei",monospace!important;background:none!important;padding:0!important;color:inherit;overflow-wrap:normal!important}article pre{border-radius:11px;margin:20px 0}.code-block{margin:25px 0;min-width:0}.code-top{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:#2a4036;color:#d2e2d7;border-radius:11px 11px 0 0;font:11px ui-monospace,monospace;letter-spacing:.08em}.code-top button{font-size:11px;color:white;border-color:#567568;background:transparent;padding:3px 10px}.code-block pre{margin:0;border-radius:0 0 11px 11px}.code-details{border:0;padding:0;background:transparent;margin:25px 0}.code-details>summary{font-size:14px;color:var(--green);padding:13px 17px;background:#e5eee2;border:1px solid #cbdac4;border-radius:9px}.code-details .code-block{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8;min-width:540px}thead{background:#e8ede4}th{text-align:left;font-weight:700}th,td{border-bottom:1px solid var(--line);padding:13px 14px;vertical-align:top}tbody tr:nth-child(even){background:#fbfaf5}.table-wrap{overflow:auto;margin:23px 0;border:1px solid var(--line);border-radius:9px}details{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:13px 19px}summary{font-size:14px;font-weight:600}details[open]>summary{margin-bottom:16px}details p{font-size:14px}.bottom-nav{margin-top:45px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;font-size:13px}.footer{color:var(--muted);font-size:11px;margin-top:25px}.progress{height:3px;background:var(--green);position:fixed;top:0;left:0;width:0;z-index:10}
+@media(min-width:1100px){article{font-size:16px}.lab-body{padding:23px}}@media(max-width:900px){.layout{grid-template-columns:180px minmax(0,1fr);gap:26px;padding:28px 24px}.hero{padding-right:50px}.hero-number{font-size:62px}.hero h1{font-size:36px}.concepts{grid-template-columns:1fr}.concepts div{padding:7px}.diagram-flow{gap:6px}.diagram-node{font-size:11px}}@media(max-width:680px){body{font-size:15px}.topbar{padding:14px 20px}.topbar span:last-child{display:none}.layout{display:block;padding:20px 18px 40px}.sidebar{position:static;max-height:none;overflow:visible;padding:0}.chapter-list{display:flex;overflow:auto;gap:7px;padding-bottom:7px}.chapter-list a{white-space:nowrap;font-size:12px;padding:8px 10px;border:1px solid var(--line)}.chapter-list a span{margin-right:5px}.sidebar .nav-label,.sidebar hr,.sidebar .toc,.sidebar .side-note{display:none}.hero{margin-top:27px;padding-right:36px}.hero-number{font-size:47px;top:0}.hero h1{font-size:33px}.intro{font-size:14px}.concepts{grid-template-columns:repeat(3,1fr)}.concepts div{font-size:11px;padding:10px 3px}.concepts b{display:block}.diagram{padding:14px}.diagram-flow{flex-direction:column}.diagram-node{width:100%;font-size:13px;padding:8px}.arrow{transform:rotate(90deg);line-height:1}.lab-head{padding:13px 15px}.lab-head span{font-size:10px}.lab-body{padding:16px}.controls button{font-size:13px}.actions{gap:13px}.code-top{padding:9px 12px}pre{padding:15px}article h2{font-size:22px;margin-top:34px}article p{font-size:15px}.bottom-nav{font-size:12px}.tag{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.sidebar,.topbar,.lab,.actions,.bottom-nav,.progress,.code-top button{display:none}.layout{display:block;padding:0}.main{max-width:none}.hero h1{font-size:30px}body{background:white;color:black;font-size:12px}article h2{break-after:avoid;font-size:19px}pre{white-space:pre-wrap;background:#f3f3f3;color:black}table{min-width:0}a{color:black}.table-wrap{overflow:visible}.hero-number{color:#999}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><div class="progress" aria-hidden="true"></div><header class="topbar"><span class="brand">HEAD FIRST / 设计模式学习手册</span><span>01 — 05 · PYTHON 实践版 · 离线可读</span></header><div class="layout"><aside class="sidebar"><p class="nav-label">五章学习路径</p><nav class="chapter-list" aria-label="章节切换"><a href="../%E7%AC%AC1%E7%AB%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/%E8%AE%B2%E8%A7%A3.html" ><span>01</span>策略模式</a><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>02</span>观察者模式</a><a href="../%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" class="active" aria-current="page"><span>03</span>装饰者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>04</span>工厂模式</a><a href="../%E7%AC%AC5%E7%AB%A0%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html" ><span>05</span>单件模式</a></nav><hr><p class="nav-label">本章目录</p><nav class="toc" aria-label="本章目录"><a href="#s1">1. 先记住这一句话</a><a href="#s2">2. 书里的咖啡店，为什么需要包装</a><a href="#s3">3. 三个角色与一条调用链</a><a href="#s4">4. 完整 Python 示例：双份摩卡加奶泡</a><a href="#s5">5. 一次 cost 调用发生了什么</a><a href="#s6">6. Python 的 @decorator 与这个模式有什么关系</a><a href="#s7">7. 如何扩展，以及哪些地方会变难</a><a href="#s8">8. 三分钟练习：新增焦糖，基础类不动</a><a href="#s9">9. 一分钟复习与原书定位</a></nav><p class="side-note">先理解变化点，再决定模式。<br>所有示例仅使用 Python 标准库。<br>Ctrl + P 可打印含答案的完整讲解。</p></aside><main class="main" id="main"><div class="hero"><p class="eyebrow">CHAPTER 03 / 叠加功能</p><span class="hero-number" aria-hidden="true">03</span><h1>功能像配料，<br>一层一层加上去</h1><p class="intro">从一杯咖啡到双份摩卡加奶泡，接口保持一致，能力按需叠加。</p><div class="meta"><span class="tag">装饰者模式</span><span class="tag">建议 18 分钟</span><span class="tag">Python 3.10+</span></div></div><div class="actions"><a href="练习题.html">章节测验 · 10 题 →</a><a href="%E8%AE%B2%E8%A7%A3%E7%A8%BF.md">Markdown 讲解稿 ↗</a><a href="%E7%A4%BA%E4%BE%8B.py" download>下载 Python 示例 ↓</a><a href="%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F.pdf">对照原书 PDF ↗</a></div><div class="concepts"><div><b>01</b>保持同一接口</div><div><b>02</b>包装并委托</div><div><b>03</b>用最外层引用</div></div><figure class="diagram" aria-label="Whip 奶泡到Mocha 摩卡到Espresso 咖啡"><div class="diagram-flow"><div class="diagram-node">Whip 奶泡</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">Mocha 摩卡</div><span class="arrow" aria-hidden="true">→</span><div class="diagram-node">Espresso 咖啡</div></div><p>调用向内传递，结果向外返回；每层只增加自己的职责。</p></figure><section class="lab" aria-label="交互演示"><div class="lab-head"><b>动手看变化</b><span>浏览器演示 · Python 源码见下文</span></div><div class="lab-body"><p class="lab-desc">每次点击都在最外层再包一份配料；同一种配料可以重复添加。基础咖啡 18 元，摩卡 3 元，奶泡 2 元。</p><div class="controls"><button id="mocha">＋ 一份摩卡</button><button id="whip">＋ 一份奶泡</button><button id="reset">重置</button></div><div class="result" id="result" aria-live="polite">Espresso()
+价格：18.00 元</div></div></section><article><blockquote>
+<p>学习目标：不修改基础对象，把可选功能按需叠加；能顺着包装链解释调用和返回，并区分装饰者模式与 Python 的 @ 语法。</p>
+</blockquote>
+<p>建议用时：速读 8 分钟，运行与练习 10 分钟。抓住“同一接口、持有对象、委托后增强”这三个动作。</p>
+<h2 id="s1">1. 先记住这一句话</h2>
+<p><strong>装饰者模式：用具有相同使用接口的新对象，包住原对象，在委托调用的前后增加功能。</strong></p>
+<p>一杯浓缩咖啡，加一份摩卡，再加奶泡，还是可以用“饮料”的方式询问描述和价格。每层只处理自己增加的部分，其余交给里面那层。</p>
+<p>策略是换一种做法，装饰者是把功能叠上去。</p>
+<h2 id="s2">2. 书里的咖啡店，为什么需要包装</h2>
+<p>如果每种组合都有一个类，很快就会出现“咖啡加摩卡”“咖啡加双份摩卡加奶泡”等大量类。调料价格变一次，很多组合都可能要修改。</p>
+<p>改成在父类里保存 <code>has_milk</code>、<code>has_mocha</code> 等布尔字段也有局限：增加调料要改父类；布尔字段不能自然表达双份；不适合某种饮料的调料也被塞进共同父类。</p>
+<p>包装把组合从“写死在类名中”移到“创建对象时决定”：<code>Whip(Mocha(Mocha(Espresso())))</code>。基础饮料与每种配料各负责自己的价格，组合时再计算总价。</p>
+<p><strong>开放—关闭原则：对某类扩展开放，让已有稳定逻辑尽量不用修改。</strong> 这里对“新增一种包装功能”开放，不代表永远不能修代码，更不代表所有未来需求都能免修改。</p>
+<h2 id="s3">3. 三个角色与一条调用链</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>本例</th>
+<th>责任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>组件接口</td>
+<td>Beverage</td>
+<td>约定 description 与 cost</td>
+</tr>
+<tr>
+<td>具体组件</td>
+<td>Espresso</td>
+<td>提供基础饮料和基础价格</td>
+</tr>
+<tr>
+<td>装饰者</td>
+<td>Mocha、Whip</td>
+<td>保存一个 Beverage，委托并加上自己的功能</td>
+</tr>
+</tbody></table></div>
+<p>调用方向：<code>Whip → Mocha → Mocha → Espresso</code>。</p>
+<p>返回方向：<code>1800 → 2100 → 2400 → 2600 分</code>。</p>
+<p>价格是本讲解自定的示例数据。用整数“分”避免二进制浮点数计算金额的误差，不需要为了本例引入货币库。</p>
+<h2 id="s4">4. 完整 Python 示例：双份摩卡加奶泡</h2>
+<p>同目录 <a href="%E7%A4%BA%E4%BE%8B.py">示例.py</a>，使用 Python 3.10+ 执行 <code>python 示例.py</code>。</p>
+<details class="code-details"><summary>展开完整 Python 示例 · 54 行 · 可复制运行</summary><div class="code-block"><div class="code-top"><span>PYTHON · 54 行</span><button data-copy="code-1" aria-label="复制python代码">复制</button></div><pre><code id="code-1" class="language-python">from dataclasses import dataclass
+from typing import Protocol
+
+
+class Beverage(Protocol):
+    def description(self) -&gt; str: ...
+    def cost(self) -&gt; int: ...  # 金额单位：分。
+
+
+class Espresso:
+    def description(self) -&gt; str:
+        return &quot;浓缩咖啡&quot;
+
+    def cost(self) -&gt; int:
+        return 1800
+
+
+@dataclass(frozen=True)
+class Mocha:
+    beverage: Beverage
+
+    def description(self) -&gt; str:
+        return self.beverage.description() + &quot; + 摩卡&quot;
+
+    def cost(self) -&gt; int:
+        return self.beverage.cost() + 300
+
+
+@dataclass(frozen=True)
+class Whip:
+    beverage: Beverage
+
+    def description(self) -&gt; str:
+        return self.beverage.description() + &quot; + 奶泡&quot;
+
+    def cost(self) -&gt; int:
+        return self.beverage.cost() + 200
+
+
+def demo() -&gt; None:
+    base = Espresso()
+    drink: Beverage = Whip(Mocha(Mocha(base)))
+    expected_name = &quot;浓缩咖啡 + 摩卡 + 摩卡 + 奶泡&quot;
+    if drink.cost() != 2600 or drink.description() != expected_name:
+        raise AssertionError(&quot;包装链计算错误&quot;)
+    if base.cost() != 1800:
+        raise AssertionError(&quot;包装不应修改基础饮料&quot;)
+    print(drink.description())
+    print(f&quot;价格：{drink.cost() / 100:.2f} 元&quot;)
+    print(&quot;自检通过&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre></div></details>
+<p>预期输出：</p>
+<div class="code-block"><div class="code-top"><span>TEXT · 3 行</span><button data-copy="code-2" aria-label="复制text代码">复制</button></div><pre><code id="code-2" class="language-text">浓缩咖啡 + 摩卡 + 摩卡 + 奶泡
+价格：26.00 元
+自检通过
+</code></pre></div>
+<p><code>Protocol</code> 说明对象应提供什么方法，供读者和类型检查器理解；它不会自动在运行时校验对象。<code>Espresso</code> 和两种装饰者不必显式继承它，只要满足约定即可。</p>
+<p>书中用一个抽象装饰者类共享类型关系；这个短小 Python 版本省去中间层，用统一的结构化接口保留同样的包装关系。</p>
+<h2 id="s5">5. 一次 cost 调用发生了什么</h2>
+<ol>
+<li>客户只调用最外层 <code>drink.cost()</code>，也就是奶泡层。</li>
+<li>奶泡层先调用里面的摩卡，摩卡再调用里面的摩卡，直到基础咖啡。</li>
+<li>基础咖啡返回 1800；每层在返回值上加自己的价格。</li>
+<li>调用者拿到 2600，不必理解内部包了几层。</li>
+</ol>
+<p><strong>必须保留并使用最外层引用。</strong> 如果后来还拿 <code>base.cost()</code> 结账，当然只会收到 18 元，因为你绕开了所有包装。</p>
+<p>本例只做固定加法，调换摩卡和奶泡不改变总价，但会改变描述顺序。若一层打九折、一层加固定配送费，包装顺序会影响金额：<code>(原价 + 配送费) × 0.9</code> 与 <code>原价 × 0.9 + 配送费</code> 不同。</p>
+<h2 id="s6">6. Python 的 @decorator 与这个模式有什么关系</h2>
+<p>Python 的 <code>@decorate</code> 是语法：函数定义后，把函数交给 <code>decorate</code>，用返回值替换原名字。它可以用于包装，也能用于注册、标记等其他用途。</p>
+<p>装饰者模式则是设计关系：<strong>维持共同接口、持有被包装对象、通过委托扩展行为。</strong> 所以不是每个 <code>@</code> 都是装饰者模式；装饰者模式也完全不需要 <code>@</code>。</p>
+<p>一个包裹函数的计时器可能体现同样的思想。实际写函数包装时，常用 <code>functools.wraps</code> 保留原函数的名称、文档等信息；普通元数据装饰并不能单凭 <code>@</code> 就算本模式。</p>
+<p>书中的 Java I/O 是另一种应用：基础输入流负责读取，缓冲层等包装提供附加能力。Python 中遇到 I/O，先使用 <code>open()</code>、<code>io</code>、<code>gzip</code> 等已有能力，不要为了练模式重新实现文件系统。</p>
+<h2 id="s7">7. 如何扩展，以及哪些地方会变难</h2>
+<p>新增焦糖：写一个同接口包装类，价格返回内部价格加焦糖价，再在下单入口包一层。基础咖啡和已有摩卡不变。</p>
+<p>新增杯型：明确杯型归谁管理。一个常见做法是基础饮料保存杯型，包装层的 <code>size</code> 访问统一转交内部对象，配料按它计费。不要每层各存一份默认杯型，否则可能出现大杯咖啡按小杯配料结账。若允许改杯型，还要定义修改从哪层向内传递。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>适合用</th>
+<th>需要另想办法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能可选、可组合、可以多层叠加</td>
+<td>特性之间大量互斥、强依赖，需要跨层检查</td>
+</tr>
+<tr>
+<td>客户能只依赖共同接口</td>
+<td>客户到处检查具体类或强制拆开包装</td>
+</tr>
+<tr>
+<td>在调用前后添加独立能力</td>
+<td>只是几项数据加总，用列表求和就够了</td>
+</tr>
+</tbody></table></div>
+<p>包装层多会让调试路径变长；对象创建也更复杂。装饰者不负责自动禁止非法组合，订单约束需要在组装入口验证。抽象的收益应当超过这份复杂度。</p>
+<h2 id="s8">8. 三分钟练习：新增焦糖，基础类不动</h2>
+<p>任务：焦糖加收 400 分，组合一杯“浓缩咖啡 + 焦糖 + 奶泡”，预期 2400 分。不要修改 <code>Espresso</code>、<code>Mocha</code>、<code>Whip</code>。</p>
+<details>
+<summary>查看参考答案</summary>
+
+<div class="code-block"><div class="code-top"><span>PYTHON · 12 行</span><button data-copy="code-3" aria-label="复制python代码">复制</button></div><pre><code id="code-3" class="language-python">@dataclass(frozen=True)
+class Caramel:
+    beverage: Beverage
+
+    def description(self) -&gt; str:
+        return self.beverage.description() + &quot; + 焦糖&quot;
+
+    def cost(self) -&gt; int:
+        return self.beverage.cost() + 400
+
+drink = Whip(Caramel(Espresso()))
+assert drink.cost() == 2400
+</code></pre></div>
+<p>检查点：新行为在新类里；创建对象的代码可以改变，这不违背开放—关闭原则。不要把“修改入口组装”误认为“修改基础算法”。</p>
+</details>
+
+<details>
+<summary>自测：包装后，为什么 isinstance(drink, Espresso) 不再可靠？</summary>
+
+<p>外层对象可能是 Whip 或 Mocha，它仍满足 Beverage 约定，但不再是 Espresso 实例。客户应通过共同接口工作。若业务确实需要咖啡种类，应把它作为接口中的明确数据，而不是强拆包装链。</p>
+</details>
+
+<h2 id="s9">9. 一分钟复习与原书定位</h2>
+<p><strong>看到“保持接口、按需叠加能力”，想到装饰者。检查三件事：接口是否一致、是否委托内部对象、是否使用最外层引用。</strong></p>
+<p>原书：<a href="%E7%AC%AC3%E7%AB%A0%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F.pdf">本章 PDF</a>。本稿重新组织讲解；Python 的 Protocol、金额单位和 @ 说明为实践补充。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想补看的内容</th>
+<th>书中印刷页码</th>
+<th>本章 PDF 页码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>继承组合爆炸与开放—关闭原则</td>
+<td>80–87</td>
+<td>2–9</td>
+</tr>
+<tr>
+<td>包装关系、定义、类型关系</td>
+<td>88–93</td>
+<td>10–15</td>
+</tr>
+<tr>
+<td>咖啡实现与杯型练习</td>
+<td>94–99</td>
+<td>16–21</td>
+</tr>
+<tr>
+<td>Java I/O 中的包装</td>
+<td>100–103</td>
+<td>22–25</td>
+</tr>
+</tbody></table></div>
+<p>前两章主要管理行为和通知；本章管理叠加能力。下一章解决这些对象由谁创建、如何组装。</p>
+</article><nav class="bottom-nav" aria-label="上下章"><a href="../%E7%AC%AC2%E7%AB%A0%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">← 上一章 · 观察者模式</a><a href="../%E7%AC%AC4%E7%AB%A0%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/%E8%AE%B2%E8%A7%A3.html">下一章 · 工厂模式 →</a></nav><footer class="footer">依据本地《Head First 设计模式（第二版）》对应章节重新编写。Python 示例与实践补充见正文。原 PDF 保持不变。</footer></main></div><script>const result=document.getElementById('result');let layers=[],price=1800;function render(){let chain='Espresso()';for(const x of layers)chain=x+'('+chain+')';result.textContent=chain+'\n价格：'+(price/100).toFixed(2)+' 元';}document.getElementById('mocha').onclick=()=>{if(layers.length>=12){result.textContent+='\n演示最多 12 层；请重置后继续。';return;}layers.push('Mocha');price+=300;render();};document.getElementById('whip').onclick=()=>{if(layers.length>=12){result.textContent+='\n演示最多 12 层；请重置后继续。';return;}layers.push('Whip');price+=200;render();};document.getElementById('reset').onclick=()=>{layers=[];price=1800;render();};
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='已复制';}catch{const range=document.createRange();range.selectNodeContents(document.getElementById(b.dataset.copy));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);b.textContent='已选中，按 Ctrl+C';}}));
+  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(max>0?scrollY/max*100:0)+'%';};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.querySelectorAll('details').forEach(x=>x.addEventListener('toggle',update));update();
+  let opened=[];addEventListener('beforeprint',()=>{opened=[...document.querySelectorAll('details')].filter(x=>!x.open);opened.forEach(x=>x.open=true);});addEventListener('afterprint',()=>{opened.forEach(x=>x.open=false);});</script></body></html>
